@@ -7,11 +7,11 @@
     python -m venv myvirtualenvironment
     ```
 ### enter virtual environement
-linux
+##### linux
     ```bash
     source myvirtualenvironment/bin/activate
     ```
-windows
+##### windows
     ```bash
     myvirtualenvironment\Scripts\activate
     ```
