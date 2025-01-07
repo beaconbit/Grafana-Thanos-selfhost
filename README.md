@@ -3,18 +3,17 @@
 
 # Run Python Daemon
 ### create a virtual environment
-    ```bash
+    ``` bash
     python -m venv myvirtualenvironment
     ```
 ### enter virtual environement
 ##### linux
-    ```bash
+    ```
     source myvirtualenvironment/bin/activate
     ```
 ##### windows
-    ```bash
-    myvirtualenvironment\Scripts\activate
     ```
+    myvirtualenvironment\Scripts\activate
 
 
 # Run Granafa instance
