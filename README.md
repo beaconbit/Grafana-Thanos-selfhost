@@ -20,3 +20,9 @@
 
 # Run Thanos / Prometheus instance
 
+##### linux
+    cd backend
+
+##### linux
+    docker-compose up
+
