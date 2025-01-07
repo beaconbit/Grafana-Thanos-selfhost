@@ -1,13 +1,18 @@
 
 # Grafana-Thanos-selfhost" 
 The python daemon is a simple webserver that scrapes data and exposes it on port 8000 in the format that prometheus expects
+
 The storage layer is minio which is a S3 drop-in replacement
+
 The Backend is Thanos/Prometheus, Prometheus scrapes port 8000 and passes it to the thanos instance which interfaces with the storage layer
+
 The Frontend is Grafana which queries Thanos for data
 
 ##### start up sequence
 The python daemon is stand alone
+
 The minio instance is stand alone
+
 The Grafana instance is stand alone
 
 Once these three are up the backend can be launched, the backend scrapes from the python daemon and interfaces with long term storage on minio
