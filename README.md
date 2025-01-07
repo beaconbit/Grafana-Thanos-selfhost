@@ -7,10 +7,10 @@
     
 ### enter virtual environement
 ##### linux
-    ` source myvirtualenvironment/bin/activate
+    source myvirtualenvironment/bin/activate
 
 ##### windows
-    ` myvirtualenvironment\Scripts\activate
+    myvirtualenvironment\Scripts\activate
 
 
 # Run Granafa instance
