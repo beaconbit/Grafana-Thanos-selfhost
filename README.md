@@ -17,7 +17,8 @@
 # Run Granafa instance
 
 # Run Minio instance
-
+Minio is a drop in replacement for S3 object storage and is used in this case as a self hosted replacement for S3
+> port 9000 needs to match the port defined in backend/objstore.yml because this is the port that the thanos instance will attempt to connect to and use as its long term storage layer
 ##### storage/docker-compose.yml
     services:
         minio-image:
@@ -38,6 +39,18 @@
             command: server /minio-image/storage --console-address :9001
 
 # Run Thanos / Prometheus instance
+
+> The host.docker.internal hostname tells docker to connect to the host network, this is windows specific - an equivalent generic solution is not available on linux and it is necessary to replace this with you machines actaul ip address.
+> The port 9000 needs to match the API port expose by the minio instance defined in storage/docker-compose.yml
+> the access key and secret key correspond to the MINIO_ROOT_USER and MINIO_ROOT_PASSWORD defined in storage/docker-compose.yml
+##### backend/objstore.yml
+    type: S3
+    config:
+      bucket: "thanos-bucket"
+      endpoint: "host.docker.internal:9000"
+      access_key: "minio-image"
+      secret_key: "minio-image-pass"
+      insecure: true
 
 
 
