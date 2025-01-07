@@ -3,7 +3,8 @@
 
 # Run Python Daemon
 ### create a virtual environment
-   ` python -m venv myvirtualenvironment
+##### linux
+    python -m venv myvirtualenvironment
     
 ### enter virtual environement
 ##### linux
