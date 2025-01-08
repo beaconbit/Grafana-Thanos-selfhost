@@ -33,10 +33,13 @@ Once the backend is running Grafana can be configured to pull data from it
 
 
 # Run Granafa instance
+Once grafana is up and running go to localhost:3000, create a new datasource (prometheus), select thanos as the type, http://host.docker.internal:9091 as the url
 
 # Run Minio instance
 Minio is a drop in replacement for S3 object storage and is used in this case as a self hosted replacement for S3
 > port 9000 needs to match the port defined in backend/objstore.yml because this is the port that the thanos instance will attempt to connect to and use as its long term storage layer
+
+> backend/objstore.yml bucket name needs to match the bucket that you create, once minio is running go to the web ui at port 9000 and create a correctly named bucket
 ##### storage/docker-compose.yml
     services:
         minio-image:
