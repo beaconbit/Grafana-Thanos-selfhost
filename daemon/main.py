@@ -6,6 +6,7 @@ import json
 import time
 import os
 from prometheus_client import start_http_server, Gauge
+import random
 
 
 def clear_terminal():
@@ -30,25 +31,13 @@ def code_b():
     ips_and_cookies = get_cookies(found_devices)
     return ips_and_cookies
 
-
-def main():
-    counter_1 = Gauge('count_1', 'Counter 1')
-    counter_2 = Gauge('count_2', 'Counter 2')
-    counter_3 = Gauge('count_3', 'Counter 3')
-    counter_4 = Gauge('count_4', 'Counter 4')
-    counter_5 = Gauge('count_5', 'Counter 5')
-    counter_6 = Gauge('count_6', 'Counter 6')
-    counter_7 = Gauge('count_7', 'Counter 7')
-    counter_8 = Gauge('count_8', 'Counter 8')
-    start_http_server(8000)
-
-
+def normal_loop(counters):
     last_run_time = time.time()  # Track the last time Code B was run
     interval = 1000  # Time interval for Code B (in seconds)
+    # code b
     ips_and_cookies = code_b()
-
-    counters = [counter_1, counter_2, counter_3, counter_4, counter_5, counter_6, counter_7 , counter_8]
-
+    # code a
+    code_a(ips_and_cookies, counters)
     try:
         while True:
             # Code A runs constantly
@@ -78,6 +67,45 @@ def main():
         print(f"\nProgram terminated {e}")
     finally:
         print("Cleanup (if needed). Goodbye!")
+
+
+def increment_at_speed(speed):
+    unlikely =      [0, 0, 0, 0, 0, 1, 0, 0, 0, 0]
+    likely =        [0, 0, 0, 0, 1, 0, 1, 0, 0, 0]
+    definite =      [0, 0, 0, 1, 0, 1, 0, 1, 0, 0]
+    certain =       [0, 0, 1, 0, 1, 0, 1, 0, 1, 0]
+    guaranteed =    [0, 1, 0, 1, 0, 1, 0, 1, 0, 1]
+    chance = [ unlikely, likely, definite, certain, guaranteed]
+    random_number = random.randint(0, 4)
+    result = chance[speed][random_number]
+    return result
+    
+
+def generate_synthetic_data_loop(counters):
+    while True:
+        print("generating synthetic data")
+        time.sleep(1)
+        for i, counter in enumerate(counters):
+            old = counter._value.get()
+            print(f'counter_{i} : {old}')
+            inc = increment_at_speed(i % 4)
+            # set counter to 'old value' + 'random increment' where random increment can be zero
+            counter.set(old + inc)
+
+def main():
+    counter_1 = Gauge('count_1', 'Counter 1')
+    counter_2 = Gauge('count_2', 'Counter 2')
+    counter_3 = Gauge('count_3', 'Counter 3')
+    counter_4 = Gauge('count_4', 'Counter 4')
+    counter_5 = Gauge('count_5', 'Counter 5')
+    counter_6 = Gauge('count_6', 'Counter 6')
+    counter_7 = Gauge('count_7', 'Counter 7')
+    counter_8 = Gauge('count_8', 'Counter 8')
+    start_http_server(8000)
+
+    counters = [counter_1, counter_2, counter_3, counter_4, counter_5, counter_6, counter_7 , counter_8]
+
+    generate_synthetic_data_loop(counters)
 
 
 if __name__ == "__main__":
