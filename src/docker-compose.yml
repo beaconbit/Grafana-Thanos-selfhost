@@ -1,5 +1,15 @@
 services:
 
+  # Python service that continually scrapes metrics and exposes them in a format prometheus understands
+  metric_daemon:
+    build:
+      context: ./python  # The directory containing your Dockerfile and application code
+      dockerfile: Dockerfile.python
+    ports:
+      - "8000:8000"  # Optional: Map ports if your app listens on a specific port
+    command: ["python", "app.py"]
+
+  # Frontend
   grafana:
     image: grafana/grafana  # Use the Grafana image
     container_name: frontend  # Name of the container

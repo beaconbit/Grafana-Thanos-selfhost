@@ -1,0 +1,10 @@
+services:
+  python-app:
+    build:
+      context: .  # The directory containing your Dockerfile and application code
+      dockerfile: Dockerfile.python
+    ports:
+      - "8000:8000"  # Optional: Map ports if your app listens on a specific port
+    environment:
+      - APP_ENV=production  # Example: Pass environment variables to the container
+    command: ["python", "app.py"]
