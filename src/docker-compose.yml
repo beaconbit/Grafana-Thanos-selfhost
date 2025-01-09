@@ -1,4 +1,53 @@
 services:
+
+  grafana:
+    image: grafana/grafana  # Use the Grafana image
+    container_name: frontend  # Name of the container
+    ports:
+      - "3001:3000"  # Map port 3000 on the host to port 3000 in the container
+    volumes:
+      - ./grafana/provisioning:/etc/grafana/provisioning  # Mount provisioning directory
+      - ./data/grafana:/var/lib/grafana  # Persist Grafana data
+    networks:
+      - thanos
+
+  # Object Storage Layer
+  minio:
+    container_name: minio-storage-layer
+    build:
+        context: .
+        dockerfile: Dockerfile.minio
+    restart: always
+    working_dir: "/minio-image/storage"
+    volumes:
+        - ./Storage/minio/storage:/minio-image/storage
+    ports:
+        - "9000:9000"
+        - "9001:9001"
+    environment:
+        MINIO_ROOT_USER: ${MINIO_ROOT_USER}
+        MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD}
+    command: server /minio-image/storage --console-address :9001
+    networks:
+      - thanos
+
+  # Bucket Configuration
+  create_bucket:
+    image: minio/mc
+    depends_on:
+      - minio
+    environment:
+        MINIO_ROOT_USER: ${MINIO_ROOT_USER}
+        MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD}
+    entrypoint: >
+      /bin/sh -c "
+      /usr/bin/mc config host add myminio http://minio:9000 ${MINIO_ROOT_USER} ${MINIO_ROOT_PASSWORD};
+      /usr/bin/mc mb myminio/prometheus-data;
+      exit 0;
+      "
+    networks:
+      - thanos
+
   # Prometheus Service
   prometheus:
     image: prom/prometheus:latest
@@ -14,6 +63,11 @@ services:
       - '--storage.tsdb.min-block-duration=1h'  # Set to an appropriate value
       - '--storage.tsdb.max-block-duration=1h'  # Set to the same value
       - "--storage.tsdb.retention.time=6h" # Keep short retention for Thanos Sidecar
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "http://localhost:9090/-/healthy"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
     ports:
       - "9090:9090" # Expose Prometheus web interface
     networks:
@@ -24,7 +78,10 @@ services:
     image: quay.io/thanos/thanos:v0.24.0
     container_name: thanos-sidecar
     depends_on:
-      - prometheus
+      prometheus:
+        condition: service_healthy
+      create_bucket:
+        condition: service_completed_successfully
     command:
       - "sidecar"
       - "--tsdb.path=/prometheus"
@@ -41,6 +98,9 @@ services:
   store:
     image: quay.io/thanos/thanos:v0.24.0
     container_name: thanos-store
+    depends_on:
+      create_bucket:
+        condition: service_completed_successfully
     command:
       - "store"
       - "--objstore.config-file=/etc/thanos/objstore.yml"
