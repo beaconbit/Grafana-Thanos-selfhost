@@ -3,10 +3,15 @@ import hashlib
 from bs4 import BeautifulSoup
 
 
-def get_cookie(url="http://10.0.0.3/config",username="root",password="00000000"):
+def get_cookie(ip):
+    username="root"
+    password="00000000"
+    url = f"http://{ip}/config"
     hash_output = ""
-    print(f'getting cookie for {url}')
-    response = requests.get(url)
+    try:
+        response = requests.get(url)
+    except Exception as e:
+        return { "error": f'Timeout when fetching http://{ip}/config', "value" : None }
     if response.status_code == 200:
         content_type = response.headers.get("Content-Type", "")
         html_response = response.text
@@ -17,9 +22,9 @@ def get_cookie(url="http://10.0.0.3/config",username="root",password="00000000")
             hash_input =  f"{seeddata_value}:{username}:{password}"
             hash_output = hashlib.md5(hash_input.encode()).hexdigest()
         else:
-            return { "error": "Seeddata not found in the response.", "result" : None }
+            return { "error": "Seeddata not found in the response.", "value" : None }
     else:
-        return { "error": "Failed to retrieve data", "result" : None }
+        return { "error": f'Error: got response status {response.status_code} when fetching http://{ip}/config', "value" : None }
 
     cookie_name = ""
     cookie_value = ""
@@ -32,7 +37,10 @@ def get_cookie(url="http://10.0.0.3/config",username="root",password="00000000")
         headers = {
             "Content-Type": "application/x-www-form-urlencoded"
         }
-        response = requests.post(login_url, data=data, headers=headers)
+        try:
+            response = requests.post(login_url, data=data, headers=headers)
+        except Exception as e:
+            return { "error": "Timeout when requesting cookie", "value" : None }
         if response.status_code == 200:
             content_type = response.headers.get("Content-Type", "")
             html_response = response.text
@@ -41,20 +49,8 @@ def get_cookie(url="http://10.0.0.3/config",username="root",password="00000000")
                 cookie_name = cookie.name
                 cookie_value = cookie.value
         else:
-            return { "error": "Failed to retrieve data", "result" : None }
+            return { "error": f'response status: {response.status_code}', "value" : None }
     else:
-        return { "error": "could not create hash", "result" : None }
-    result = { "name" : cookie_name, "value" : cookie_value }
-    return { "error": None, "result" : result }
+        return { "error": "could not create hash", "value" : None }
+    return { "error": None, "value" : cookie_value }
 
-
-
-    #response2 = requests.get(url2, cookies=cookies)
-
-def get_cookies(devices):
-    device_cookies = []
-    for device in devices:
-        url = f"http://{device}/config"
-        cookie_obj = get_cookie(url)
-        device_cookies.append({ "ip" : device, "cookie" : cookie_obj })
-    return device_cookies

@@ -18,29 +18,11 @@ def scan_network():
     ip_range = my_ip + "/24"
     arp = ARP(pdst=ip_range)
     ether = Ether(dst="ff:ff:ff:ff:ff:ff")
-    print(ether)
-    print(arp)
     packet = ether / arp
-    print(packet)
     result = srp(packet, timeout=2, verbose=False)[0]
 
     # Extract IP and MAC addresses from the response
-    devices = []
+    devices = {}
     for sent, received in result:
-        print(sent)
-    for sent, received in result:
-        try:
-            # check which ones are WISE 4051
-            url = f'http://{received.psrc}/config'
-            response = requests.get(url)
-            if response.status_code == 200:
-                html_response = response.text
-                soup = BeautifulSoup(html_response, 'html.parser')
-                seeddata_input = soup.find('input', {'name': 'seeddata'})
-                if seeddata_input:
-                    devices.append({'ip': received.psrc, 'mac': received.hwsrc})
-                    print(f"devices: {devices}")
-        except Exception as e:
-            print(f'{received.psrc} is not a known device')
-            print(f'{e}')
+        devices[received.hwsrc] = received.psrc
     return devices
