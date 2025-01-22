@@ -1,0 +1,5 @@
+load_count_cbw_1{job="webserver",instance="192.168.1.100:8080",env="prod",region="us-west"} 10 1737583560000
+load_count_cbw_1{job="webserver",instance="192.168.1.100:8080",env="prod",region="us-west"} 11 1737583561000
+load_count_cbw_1{job="webserver",instance="192.168.1.100:8080",env="prod",region="us-west"} 12 1737583562000
+load_count_cbw_1{job="webserver",instance="192.168.1.100:8080",env="prod",region="us-west"} 13 1737583563000
+load_count_cbw_1{job="webserver",instance="192.168.1.100:8080",env="prod",region="us-west"} 14 1737583564000
