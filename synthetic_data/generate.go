@@ -14,8 +14,8 @@ import (
 func main() {
     // Create a new TSDB instance
     db, err := tsdb.Open(
-        "./Grafana-Thanos-selfhost/src/data/prometheus", 
-        //"./data",
+        //"./Grafana-Thanos-selfhost/src/data/prometheus", 
+        "./data",
         nil,      // a logger (can be nil for no logging)
         nil,      // an optional prometheus.Registerer
         tsdb.DefaultOptions(),
@@ -76,7 +76,13 @@ func main() {
     )
 
     // Initialize a SeriesRef
-    var ref storage.SeriesRef
+    var ref1 storage.SeriesRef
+    var ref2 storage.SeriesRef
+    var ref3 storage.SeriesRef
+    var ref4 storage.SeriesRef
+    var ref5 storage.SeriesRef
+    var ref6 storage.SeriesRef
+    var ref7 storage.SeriesRef
 
     datapoints := 1000
     rand.Seed(time.Now().UnixNano())
@@ -134,7 +140,7 @@ func main() {
 	if washer_1_finished && ironer_1_finished {
 		ironer_1_count++
 		//ref, err = app.Append( ref, i1_label, time.Now().Unix() * 1000, float64(ironer_1_count))
-		ref, err = app.Append( ref, i1_label, ( time.Now().Unix() - (14 * 24 * 60 * 60) + (60 * int64(i)) ) * 1000, float64(ironer_1_count))
+		ref1, err = app.Append( ref1, i1_label, ( time.Now().Unix() - (14 * 24 * 60 * 60) + (60 * int64(i)) ) * 1000, float64(ironer_1_count))
 		ironer_1_finished = false
 		washer_1_finished = false
 		if err != nil {
@@ -145,8 +151,8 @@ func main() {
 	// increment ironer 2
 	if washer_2_finished && ironer_2_finished {
 		ironer_2_count++
-		ref, err = app.Append(
-			ref, 
+		ref2, err = app.Append(
+			ref2, 
 			i2_label, 
 			( time.Now().Unix() - (14 * 24 * 60 * 60) + (60 * int64(i)) ) * 1000, 
 			float64(ironer_2_count),
@@ -161,8 +167,8 @@ func main() {
 	// increment small piece folder 1
 	if washer_1_finished && small_piece_folder_1_finished {
 		small_piece_folder_1_count++
-		ref, err = app.Append(
-			ref, 
+		ref3, err = app.Append(
+			ref3, 
 			s1_label, 
 			( time.Now().Unix() - (14 * 24 * 60 * 60) + (60 * int64(i)) ) * 1000, 
 			float64(small_piece_folder_1_count),
@@ -177,8 +183,8 @@ func main() {
 	// increment small piece folder 2
 	if washer_1_finished && small_piece_folder_2_finished {
 		small_piece_folder_2_count++
-		ref, err = app.Append(
-			ref, 
+		ref4, err = app.Append(
+			ref4, 
 			s2_label, 
 			( time.Now().Unix() - (14 * 24 * 60 * 60) + (60 * int64(i)) ) * 1000, 
 			float64(small_piece_folder_2_count),
@@ -193,8 +199,8 @@ func main() {
 	// increment small piece folder 3
 	if washer_2_finished && small_piece_folder_3_finished {
 		small_piece_folder_3_count++
-		ref, err = app.Append(
-			ref, 
+		ref5, err = app.Append(
+			ref5, 
 			s3_label, 
 			( time.Now().Unix() - (14 * 24 * 60 * 60) + (60 * int64(i)) ) * 1000, 
 			float64(small_piece_folder_3_count),
@@ -209,8 +215,8 @@ func main() {
 	// increment washer 1
 	if washer_1_finished {
 		washer_1_count++
-		ref, err = app.Append(
-			ref, 
+		ref6, err = app.Append(
+			ref6, 
 			w1_label, 
 			( time.Now().Unix() - (14 * 24 * 60 * 60) + (60 * int64(i)) ) * 1000, 
 			float64(washer_1_count),
@@ -224,8 +230,8 @@ func main() {
 	// increment washer 2
 	if washer_2_finished {
 		washer_2_count++
-		ref, err = app.Append(
-			ref, 
+		ref7, err = app.Append(
+			ref7, 
 			w2_label, 
 			( time.Now().Unix() - (14 * 24 * 60 * 60) + (60 * int64(i)) ) * 1000, 
 			float64(washer_2_count),
@@ -247,9 +253,9 @@ func main() {
         os.Exit(1)
     }
 
-//    // Compact the TSDB
-//    if err := db.Compact(context.Background()); err != nil {
-//    	fmt.Println("error compacting TSDB: ", err)
-//        os.Exit(1)
-//    }
+    // Compact the TSDB
+    if err := db.Compact(context.Background()); err != nil {
+    	fmt.Println("error compacting TSDB: ", err)
+        os.Exit(1)
+    }
 }
