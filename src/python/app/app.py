@@ -9,64 +9,64 @@ from prometheus_client import start_http_server, Gauge
 import random
 
 
-def clear_terminal():
-    os.system('cls' if os.name == 'nt' else 'clear')
+#def clear_terminal():
+#    os.system('cls' if os.name == 'nt' else 'clear')
+#
+#
+#def code_a(ips_and_cookies, counters):
+#    for device_data in ips_and_cookies:
+#        di_values = request_di_values(device_data['ip'], device_data['cookie']['result'])
+#        json_text = di_values.text
+#        output = extract_counts(json_text)
+#        clear_terminal()
+#        print(output)
+#        for i, value in enumerate(output):
+#            counters[i].set(output[i])
 
-
-def code_a(ips_and_cookies, counters):
-    for device_data in ips_and_cookies:
-        di_values = request_di_values(device_data['ip'], device_data['cookie']['result'])
-        json_text = di_values.text
-        output = extract_counts(json_text)
-        clear_terminal()
-        print(output)
-        for i, value in enumerate(output):
-            counters[i].set(output[i])
-
-def code_b():
-    devices = scan_network()
-    found_devices = []
-    for device in devices:
-        found_devices.append(device['ip'])
-    ips_and_cookies = get_cookies(found_devices)
-    return ips_and_cookies
-
-def normal_loop(counters):
-    last_run_time = time.time()  # Track the last time Code B was run
-    interval = 1000  # Time interval for Code B (in seconds)
-    # code b
-    ips_and_cookies = code_b()
-    # code a
-    code_a(ips_and_cookies, counters)
-    try:
-        while True:
-            # Code A runs constantly
-
-            try:
-                code_a(ips_and_cookies, counters)
-            except Exception as e:
-                print("Timeout")
-                print(e)
-                time.sleep(5)
-
-            # Check if it's time to run Code B
-            current_time = time.time()
-            if current_time - last_run_time >= interval:
-                try:
-                    ips_and_cookies = code_b()
-                    print("check the network again")
-                except Exception as e:
-                    print("Timeout")
-                    print(e)
-                    time.sleep(5)
-                last_run_time = current_time  # Update last run time for Code B
-
-            # Add a small sleep to avoid excessive CPU usage
-            time.sleep(0.1)
-    except Exception as e:
-        print(f"\nProgram terminated {e}")
-    finally:
-        print("Cleanup (if needed). Goodbye!")
+#def code_b():
+#    devices = scan_network()
+#    found_devices = []
+#    for device in devices:
+#        found_devices.append(device['ip'])
+#    ips_and_cookies = get_cookies(found_devices)
+#    return ips_and_cookies
+#
+#def normal_loop(counters):
+#    last_run_time = time.time()  # Track the last time Code B was run
+#    interval = 1000  # Time interval for Code B (in seconds)
+#    # code b
+#    ips_and_cookies = code_b()
+#    # code a
+#    code_a(ips_and_cookies, counters)
+#    try:
+#        while True:
+#            # Code A runs constantly
+#
+#            try:
+#                code_a(ips_and_cookies, counters)
+#            except Exception as e:
+#                print("Timeout")
+#                print(e)
+#                time.sleep(5)
+#
+#            # Check if it's time to run Code B
+#            current_time = time.time()
+#            if current_time - last_run_time >= interval:
+#                try:
+#                    ips_and_cookies = code_b()
+#                    print("check the network again")
+#                except Exception as e:
+#                    print("Timeout")
+#                    print(e)
+#                    time.sleep(5)
+#                last_run_time = current_time  # Update last run time for Code B
+#
+#            # Add a small sleep to avoid excessive CPU usage
+#            time.sleep(0.1)
+#    except Exception as e:
+#        print(f"\nProgram terminated {e}")
+#    finally:
+#        print("Cleanup (if needed). Goodbye!")
 
 
 def increment_at_speed(speed):
@@ -93,17 +93,16 @@ def generate_synthetic_data_loop(counters):
             counter.set(old + inc)
 
 def main():
-    counter_1 = Gauge('count_1', 'Counter 1')
-    counter_2 = Gauge('count_2', 'Counter 2')
-    counter_3 = Gauge('count_3', 'Counter 3')
-    counter_4 = Gauge('count_4', 'Counter 4')
-    counter_5 = Gauge('count_5', 'Counter 5')
-    counter_6 = Gauge('count_6', 'Counter 6')
-    counter_7 = Gauge('count_7', 'Counter 7')
-    counter_8 = Gauge('count_8', 'Counter 8')
+    counter_1 = Gauge('washer_1', 'Counter 1')
+    counter_2 = Gauge('washer_2', 'Counter 2')
+    counter_3 = Gauge('ironer_1', 'Counter 3')
+    counter_4 = Gauge('ironer_2', 'Counter 4')
+    counter_5 = Gauge('small_piece_folder_1', 'Counter 5')
+    counter_6 = Gauge('small_piece_folder_2', 'Counter 6')
+    counter_7 = Gauge('small_piece_folder_3', 'Counter 7')
     start_http_server(8000)
 
-    counters = [counter_1, counter_2, counter_3, counter_4, counter_5, counter_6, counter_7 , counter_8]
+    counters = [counter_1, counter_2, counter_3, counter_4, counter_5, counter_6, counter_7]
 
     generate_synthetic_data_loop(counters)
 
