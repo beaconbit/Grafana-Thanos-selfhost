@@ -1,0 +1,44 @@
+services:
+
+  # Frontend
+  grafana:
+    image: grafana/grafana  # Use the Grafana image
+    container_name: test.frontend  # Name of the container
+    ports:
+      - "3003:3000"  # Map port 3000 on the host to port 3000 in the container
+    volumes:
+      - ./grafana/provisioning:/etc/grafana/provisioning  # Mount provisioning directory
+    networks:
+      - container
+
+  # Prometheus Service
+  test.prometheus:
+    image: prom/prometheus:latest
+    container_name: test.prometheus
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./data/prometheus:/prometheus
+      - ./data/prometheus/wal:/prometheus/wal
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+      - "--storage.tsdb.path=/prometheus"
+      - "--web.enable-lifecycle"
+      - '--storage.tsdb.min-block-duration=2h'  # Set to an appropriate value
+      - '--storage.tsdb.max-block-duration=2h'  # Set to the same value
+      - "--storage.tsdb.retention.time=90d" # Keep long retention 
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "http://localhost:9099/-/healthy"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    ports:
+      - "9099:9090" # Expose Prometheus web interface
+    networks:
+      - container
+
+volumes:
+  data:
+    driver: local
+networks:
+  container:
+    driver: bridge

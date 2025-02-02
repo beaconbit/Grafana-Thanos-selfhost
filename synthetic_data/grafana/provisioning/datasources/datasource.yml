@@ -1,0 +1,9 @@
+apiVersion: 1
+datasources:
+  - name: "Default Datasource"
+    type: prometheus
+    access: proxy
+    url: http://test.prometheus:9090
+    isDefault: false
+    jsonData:
+      tlsSkipVerify: true  # Set this if you are using HTTPS and want to skip verification
