@@ -1,4 +1,3 @@
-from authenticate import get_cookies
 from scrape import request_di_values
 from parse import extract_counts
 from discover import scan_network

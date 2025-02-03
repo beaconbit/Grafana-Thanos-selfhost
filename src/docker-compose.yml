@@ -8,11 +8,14 @@ services:
     ports:
       - "8000:8000"  # Optional: Map ports if your app listens on a specific port
     command: ["python", "app.py"]
+    networks:
+      - thanos
 
   # Frontend
   grafana:
     image: grafana/grafana  # Use the Grafana image
     container_name: frontend  # Name of the container
+    user: "0:0"
     ports:
       - "3001:3000"  # Map port 3000 on the host to port 3000 in the container
     volumes:
@@ -62,6 +65,7 @@ services:
   prometheus:
     image: prom/prometheus:latest
     container_name: prometheus
+    user: "0:0"
     volumes:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml
       - ./data/prometheus:/prometheus
