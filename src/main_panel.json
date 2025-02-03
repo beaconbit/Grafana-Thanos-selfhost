@@ -1,0 +1,187 @@
+{
+  "dashboard": {
+    "id": null,
+    "uid": "laundry-metrics",
+    "title": "Laundry Processing Metrics",
+    "tags": ["laundry", "prometheus", "thanos"],
+    "timezone": "browser",
+    "schemaVersion": 27,
+    "version": 1
+  },
+      "panels": [
+      {
+        "type": "row",
+        "title": "row 1",
+        "collapsed": true,
+        "gridPos": {"h": 1, "w": 24, "x": 0, "y": 0},
+        "panels": [
+	  {
+            "type": "stat",
+            "title": "Washed (This Week)",
+            "targets": [{
+              "expr": "increase(count_1[7d]) + increase(count_2[7d])",
+              "format": "time_series"
+            }],
+            "gridPos": {"x": 0, "y": 0, "w": 4, "h": 2}
+          },
+	  {
+            "type": "stat",
+            "title": "Washed (Today)",
+            "targets": [{
+              "expr": "increase(count_1[12h]) + increase(count_2[12h])",
+              "format": "time_series"
+            }],
+            "gridPos": {"x": 0, "y": 0, "w": 4, "h": 2}
+          },
+	  {
+            "type": "gauge",
+            "title": "Washed (This Week)",
+            "targets": [{
+              "expr": "increase(count_1[7d]) + increase(count_2[7d])",
+              "format": "time_series"
+            }],
+            "gridPos": {"x": 0, "y": 0, "w": 8, "h": 8}
+          },
+	  {
+            "type": "gauge",
+            "title": "Washed (Today)",
+            "targets": [{
+              "expr": "increase(count_1[12h]) + increase(count_2[12h])",
+              "format": "time_series"
+            }],
+            "gridPos": {"x": 0, "y": 0, "w": 8, "h": 8}
+          },
+	  {
+            "type": "stat",
+            "title": "This Week",
+            "targets": [{
+              "expr": "increase(count_1[7d]) + increase(count_2[7d]) + increase(count_3[7d]) + increase(count_4[7d]) + increase(count_5[7d]) + increase(count_6[7d]) + increase(count_7[7d])",
+              "format": "time_series"
+            }],
+            "gridPos": {"x": 0, "y": 0, "w": 4, "h": 2}
+          },
+	  {
+            "type": "stat",
+            "title": "Today",
+            "targets": [{
+              "expr": "increase(count_1[12h]) + increase(count_2[12h]) + increase(count_3[12h]) + increase(count_4[12h]) + increase(count_5[12h]) + increase(count_6[12h]) + increase(count_7[12h])",
+              "format": "time_series"
+            }],
+            "gridPos": {"x": 0, "y": 0, "w": 4, "h": 2}
+          },
+	  {
+            "type": "gauge",
+            "title": "This Week",
+            "targets": [{
+              "expr": "increase(count_1[7d]) + increase(count_2[7d]) + increase(count_3[7d]) + increase(count_4[7d]) + increase(count_5[7d]) + increase(count_6[7d]) + increase(count_7[7d])",
+              "format": "time_series"
+            }],
+            "gridPos": {"x": 0, "y": 0, "w": 8, "h": 8}
+          },
+	  {
+            "type": "gauge",
+            "title": "Today",
+            "targets": [{
+              "expr": "increase(count_1[12h]) + increase(count_2[12h]) + increase(count_3[12h]) + increase(count_4[12h]) + increase(count_5[12h]) + increase(count_6[12h]) + increase(count_7[12h])",
+              "format": "time_series"
+            }],
+            "gridPos": {"x": 0, "y": 0, "w": 8, "h": 8}
+          },
+	  {
+            "type": "gauge",
+            "title": "Today",
+            "targets": [
+              {"expr": "increase(count_1[12h])", "legendFormat": "Washer 1"},
+              {"expr": "increase(count_2[12h])", "legendFormat": "Washer 2"},
+              {"expr": "increase(count_3[12h])", "legendFormat": "Ironer 1"},
+              {"expr": "increase(count_4[12h])", "legendFormat": "Ironer 2"},
+              {"expr": "increase(count_5[12h])", "legendFormat": "Folder 1"},
+              {"expr": "increase(count_6[12h])", "legendFormat": "Folder 2"},
+              {"expr": "increase(count_7[12h])", "legendFormat": "Folder 3"}
+            ],
+            "gridPos": {"x": 0, "y": 0, "w": 8, "h": 8}
+          }
+	]
+      },
+      {
+        "type": "row",
+        "title": "row 2",
+        "collapsed": true,
+        "gridPos": {"h": 1, "w": 24, "x": 0, "y": 0},
+	"panels": [
+          {
+            "type": "stat",
+            "title": "Today",
+            "targets": [{
+              "expr": "increase(count_1[12h]) + increase(count_2[12h]) + increase(count_3[12h]) + increase(count_4[12h]) + increase(count_5[12h]) + increase(count_6[12h]) + increase(count_7[12h])",
+              "format": "time_series"
+            }],
+            "gridPos": {"x": 0, "y": 3, "w": 4, "h": 2}
+          }
+	]
+
+      },
+      {
+        "type": "row",
+        "title": "row 3",
+        "collapsed": true,
+        "gridPos": {"h": 1, "w": 24, "x": 0, "y": 0},
+	"panels": [
+          {
+            "type": "graph",
+            "title": "Processing Rate (PPM) Over Time",
+            "targets": [
+              {"expr": "rate(count_1[10m])", "legendFormat": "Washer 1"},
+              {"expr": "rate(count_2[10m])", "legendFormat": "Washer 2"},
+              {"expr": "rate(count_3[10m])", "legendFormat": "Ironer 1"},
+              {"expr": "rate(count_4[10m])", "legendFormat": "Ironer 2"},
+              {"expr": "rate(count_5[10m])", "legendFormat": "Folder 1"},
+              {"expr": "rate(count_6[10m])", "legendFormat": "Folder 2"},
+              {"expr": "rate(count_7[10m])", "legendFormat": "Folder 3"}
+            ],
+            "gridPos": {"x": 4, "y": 0, "w": 12, "h": 12},
+            "lines": true,               
+            "fill": 0,                  
+            "points": false, 
+            "thresholds": [
+              {
+                "value": 0.1,                         
+                "color": "rgb(0, 255, 0)",           
+                "op": "gt",                          
+                "fill": true                         
+              },
+              {
+                "value": 0.1,                          
+                "color": "rgb(255, 0, 0)",         
+                "op": "lt",
+                "fill": true
+              }
+            ]
+          },
+          {
+            "type": "bargauge",
+            "title": "Total Pieces Processed Per Machine Today",
+            "targets": [
+              {"expr": "increase(count_1[12h])", "legendFormat": "Washer 1"},
+              {"expr": "increase(count_2[12h])", "legendFormat": "Washer 2"},
+              {"expr": "increase(count_3[12h])", "legendFormat": "Ironer 1"},
+              {"expr": "increase(count_4[12h])", "legendFormat": "Ironer 2"},
+              {"expr": "increase(count_5[12h])", "legendFormat": "Folder 1"},
+              {"expr": "increase(count_6[12h])", "legendFormat": "Folder 2"},
+              {"expr": "increase(count_7[12h])", "legendFormat": "Folder 3"}
+            ],
+            "gridPos": {"x": 0, "y": 4, "w": 8, "h": 4}
+          },
+          {
+            "type": "heatmap",
+            "title": "Processing Heatmap (Hourly)",
+            "targets": [{
+              "expr": "rate(count_1[1h]) + rate(count_2[1h]) + rate(count_3[1h]) + rate(count_4[1h]) + rate(count_5[1h]) + rate(count_6[1h]) + rate(count_7[1h])",
+              "legendFormat": "Total PPH"
+            }],
+            "gridPos": {"x": 8, "y": 4, "w": 8, "h": 5}
+          }
+	]
+      }
+      ]
+}
