@@ -1,0 +1,155 @@
+{
+  "dashboard": {
+    "id": null,
+    "uid": "laundry-metrics",
+    "title": "Laundry Processing Metrics",
+    "tags": ["laundry", "prometheus", "thanos"],
+    "timezone": "browser",
+    "schemaVersion": 27,
+    "version": 1
+  },
+      "panels": [
+      {
+        "type": "row",
+        "title": "row 1",
+        "collapsed": true,
+        "gridPos": {"h": 1, "w": 24, "x": 0, "y": 0},
+        "panels": [
+	  {
+            "type": "histogram",
+            "title": "Washer 1",
+            "targets": [
+              {"expr": "count_1", "legendFormat": "Washer 1"}
+            ],
+            "gridPos": {"x": 0, "y": 0, "w": 4, "h": 4}
+          },
+	  {
+            "type": "histogram",
+            "title": "Washer 2",
+            "targets": [
+              {"expr": "count_2", "legendFormat": "Washer 1"}
+            ],
+            "gridPos": {"x": 0, "y": 4, "w": 4, "h": 4}
+          },
+	  {
+            "type": "histogram",
+            "title": "Ironer 1",
+            "targets": [
+              {"expr": "count_3", "legendFormat": "Washer 1"}
+            ],
+            "gridPos": {"x": 0, "y": 8, "w": 4, "h": 4}
+          },
+	  {
+            "type": "histogram",
+            "title": "Ironer 2",
+            "targets": [
+              {"expr": "count_4", "legendFormat": "Washer 1"}
+            ],
+            "gridPos": {"x": 0, "y": 12, "w": 4, "h": 4}
+          },
+	  {
+            "type": "heatmap",
+            "title": "Productivity",
+	    "transparent": true,
+            "targets": [
+              {"expr": "rate(count_1[15m])", "legendFormat": "Washer 1"},
+              {"expr": "rate(count_2[15m])", "legendFormat": "Washer 2"},
+              {"expr": "rate(count_3[15m])", "legendFormat": "Ironer 1"},
+              {"expr": "rate(count_4[15m])", "legendFormat": "Ironer 2"},
+              {"expr": "rate(count_5[15m])", "legendFormat": "Folder 1"},
+              {"expr": "rate(count_6[15m])", "legendFormat": "Folder 2"},
+              {"expr": "rate(count_7[15m])", "legendFormat": "Folder 3"}
+            ],
+	    "editorMode": "code",
+	    "instant": false,
+	    "range": true,
+	    "interval": "",
+            "fieldConfig": {
+              "defaults": {
+                "custom": {
+                  "scaleDistribution": {
+                    "type": "exponential",
+                    "exponent": 0.5
+                  },
+                  "hideFrom": {
+                    "tooltip": false,
+                    "viz": false,
+                    "legend": false
+                  }
+                }
+              }
+            },
+            "options": {
+              "color": {
+                "mode": "scheme",
+                "scheme": "RdYlGn",
+                "steps": 19,
+                "reverse": true
+              },
+              "cellGap": 0,
+              "filterValues": {
+                "le": 1e-9
+              },
+              "tooltip": {
+                "mode": "single",
+                "yHistogram": true,
+                "showColorScale": true
+              },
+              "legend": {
+                "show": true
+              }
+            },
+            "gridPos": {"x": 4, "y": 0, "w": 20, "h": 10}
+          },
+	  {
+            "type": "graph",
+            "title": "Washers",
+            "targets": [
+              {"expr": "rate(count_1[15m])", "legendFormat": "Washer 1"},
+              {"expr": "rate(count_2[15m])", "legendFormat": "Washer 2"}
+            ],
+            "lines": true,               
+            "fill": 1,                  
+            "points": false, 
+            "gridPos": {"x": 4, "y": 10, "w": 5, "h": 6}
+          },
+	  {
+            "type": "graph",
+            "title": "Ironers",
+            "targets": [
+              {"expr": "rate(count_3[15m])", "legendFormat": "Ironer 1"},
+              {"expr": "rate(count_4[15m])", "legendFormat": "Ironer 2"}
+            ],
+            "lines": true,               
+            "fill": 1,                  
+            "points": false, 
+            "gridPos": {"x": 9, "y": 10, "w": 5, "h": 6}
+          },
+	  {
+            "type": "graph",
+            "title": "Washers",
+            "targets": [
+              {"expr": "increase(count_1[1m])", "legendFormat": "Washer 1"},
+              {"expr": "increase(count_2[1m])", "legendFormat": "Washer 2"}
+            ],
+            "lines": false,               
+            "fill": 0,                  
+            "points": true, 
+            "gridPos": {"x": 14, "y": 10, "w": 5, "h": 6}
+          },
+	  {
+            "type": "graph",
+            "title": "Ironers",
+            "targets": [
+              {"expr": "increase(count_3[1m])", "legendFormat": "Ironer 1"},
+              {"expr": "increase(count_4[1m])", "legendFormat": "Ironer 2"}
+            ],
+            "lines": false,               
+            "fill": 0,                  
+            "points": true, 
+            "gridPos": {"x": 19, "y": 10, "w": 5, "h": 6}
+          }
+	]
+      }
+   ]
+}
