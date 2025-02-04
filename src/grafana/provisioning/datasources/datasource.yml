@@ -4,6 +4,6 @@ datasources:
     type: prometheus
     access: proxy
     url: http://thanos-query:9091
-    isDefault: false
+    isDefault: true
     jsonData:
       tlsSkipVerify: true  # Set this if you are using HTTPS and want to skip verification
