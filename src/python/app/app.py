@@ -75,7 +75,7 @@ def increment_at_speed(speed):
     certain =       [0, 0, 1, 0, 1, 0, 1, 0, 1, 0]
     guaranteed =    [0, 1, 0, 1, 0, 1, 0, 1, 0, 1]
     chance = [ unlikely, likely, definite, certain, guaranteed]
-    random_number = random.randint(0, 4)
+    random_number = random.randint(0, 9)
     result = chance[speed][random_number]
     return result
     
@@ -86,24 +86,46 @@ def generate_synthetic_data_loop(counters):
         time.sleep(1)
         for i, counter in enumerate(counters):
             old = counter._value.get()
-            print(f'counter_{i} : {old}')
+            #print(f'counter_{i} : {old}')
             inc = increment_at_speed(i % 4)
             # set counter to 'old value' + 'random increment' where random increment can be zero
             counter.set(old + inc)
 
+def generate_synthetic_data_with_labels(counter, labels):
+    while True:
+        print("generating synthetic data")
+        time.sleep(1)
+        for i, label in enumerate(labels):
+            old = counter.labels(machine=label)._value.get()
+            inc = increment_at_speed(i % 4)
+            counter.labels(machine=label).set(old + inc)
+
 def main():
-    counter_1 = Gauge('washer_1', 'Counter 1')
-    counter_2 = Gauge('washer_2', 'Counter 2')
-    counter_3 = Gauge('ironer_1', 'Counter 3')
-    counter_4 = Gauge('ironer_2', 'Counter 4')
-    counter_5 = Gauge('small_piece_folder_1', 'Counter 5')
-    counter_6 = Gauge('small_piece_folder_2', 'Counter 6')
-    counter_7 = Gauge('small_piece_folder_3', 'Counter 7')
+    counter_1 = Gauge('washer_1', 'Counter 1', ['machine'])
+    counter_2 = Gauge('washer_2', 'Counter 2', ['machine'])
+    counter_3 = Gauge('ironer_1', 'Counter 3', ['machine'])
+    counter_4 = Gauge('ironer_2', 'Counter 4', ['machine'])
+    counter_5 = Gauge('small_piece_folder_1', 'Counter 5', ['machine'])
+    counter_6 = Gauge('small_piece_folder_2', 'Counter 6', ['machine'])
+    counter_7 = Gauge('small_piece_folder_3', 'Counter 7', ['machine'])
+
+    # You must set a label value before setting the counter value
+    counter_1.labels(machine='washer_1').set(0)
+    counter_1.labels(machine='washer_2').set(0)
+    counter_1.labels(machine='ironer_1').set(0)
+    counter_1.labels(machine='ironer_2').set(0)
+    counter_1.labels(machine='small_piece_folder_1').set(0)
+    counter_1.labels(machine='small_piece_folder_2').set(0)
+    counter_1.labels(machine='small_piece_folder_3').set(0)
+
     start_http_server(8000)
 
-    counters = [counter_1, counter_2, counter_3, counter_4, counter_5, counter_6, counter_7]
+    #counters = [counter_1, counter_2, counter_3, counter_4, counter_5, counter_6, counter_7]
 
-    generate_synthetic_data_loop(counters)
+    #generate_synthetic_data_loop(counters)
+    labels = [ 'washer_1', 'washer_2', 'ironer_1', 'ironer_2', 'small_piece_folder_1', 'small_piece_folder_2', 'small_piece_folder_3' ]
+
+    generate_synthetic_data_with_labels(counter_1, labels)
 
 
 if __name__ == "__main__":
