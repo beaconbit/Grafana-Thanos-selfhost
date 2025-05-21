@@ -5,7 +5,7 @@ from bs4 import BeautifulSoup
 
 def get_cookie(ip):
     username="root"
-    password="00000000"
+    password="ubuntu"
     url = f"http://{ip}/config"
     hash_output = ""
     try:
@@ -24,7 +24,7 @@ def get_cookie(ip):
         else:
             return { "error": "Seeddata not found in the response.", "value" : None }
     else:
-        return { "error": f'Error: got response status {response.status_code} when fetching http://{ip}/config', "value" : None }
+        return { "error": f'Got response status {response.status_code} when fetching http://{ip}/config', "value" : None }
 
     cookie_name = ""
     cookie_value = ""

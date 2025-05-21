@@ -1,0 +1,193 @@
+thanos-sidecar  | level=info ts=2025-02-04T22:24:02.144827093Z caller=options.go:27 protocol=gRPC msg="disabled TLS, key and cert must be set to enable"
+thanos-sidecar  | level=info ts=2025-02-04T22:24:02.145396395Z caller=factory.go:49 msg="loading bucket configuration"
+thanos-sidecar  | level=info ts=2025-02-04T22:24:02.145787516Z caller=sidecar.go:355 msg="starting sidecar"
+thanos-sidecar  | level=info ts=2025-02-04T22:24:02.146089182Z caller=intrumentation.go:60 msg="changing probe status" status=healthy
+thanos-sidecar  | level=info ts=2025-02-04T22:24:02.146163406Z caller=http.go:63 service=http/server component=sidecar msg="listening for requests and metrics" address=0.0.0.0:10902
+thanos-sidecar  | level=info ts=2025-02-04T22:24:02.147011027Z caller=intrumentation.go:48 msg="changing probe status" status=ready
+thanos-sidecar  | level=info ts=2025-02-04T22:24:02.147812033Z caller=tls_config.go:195 service=http/server component=sidecar msg="TLS is disabled." http2=false
+thanos-sidecar  | level=info ts=2025-02-04T22:24:02.149070836Z caller=grpc.go:131 service=gRPC/server component=sidecar msg="listening for serving gRPC" address=0.0.0.0:10901
+thanos-sidecar  | level=info ts=2025-02-04T22:24:02.149334348Z caller=reloader.go:199 component=reloader msg="nothing to be watched"
+thanos-sidecar  | level=warn ts=2025-02-04T22:24:02.15340623Z caller=sidecar.go:390 msg="found that TSDB block time is not 2h. Only 2h block time is recommended." block-time=1h
+thanos-sidecar  | level=info ts=2025-02-04T22:24:02.155030082Z caller=sidecar.go:179 msg="successfully loaded prometheus version"
+thanos-sidecar  | level=info ts=2025-02-04T22:24:02.156735858Z caller=sidecar.go:201 msg="successfully loaded prometheus external labels" external_labels="{monitor=\"prometheus-58377\"}"
+thanos-sidecar  | level=info ts=2025-02-04T22:24:02.156896894Z caller=intrumentation.go:48 msg="changing probe status" status=ready
+thanos-sidecar  | level=warn ts=2025-02-04T22:24:04.155455301Z caller=sidecar.go:339 err="check exists: stat s3 object: The specified bucket does not exist" uploaded=0
+thanos-sidecar  | level=warn ts=2025-02-04T22:24:34.153865548Z caller=sidecar.go:339 err="check exists: stat s3 object: The specified bucket does not exist" uploaded=0
+thanos-ruler    | level=info ts=2025-02-04T22:24:02.783935421Z caller=head.go:486 component=tsdb msg="Replaying on-disk memory mappable chunks if any"
+thanos-ruler    | level=info ts=2025-02-04T22:24:02.783993621Z caller=head.go:520 component=tsdb msg="On-disk memory mappable chunks replay completed" duration=2.585µs
+thanos-ruler    | level=info ts=2025-02-04T22:24:02.784005086Z caller=head.go:526 component=tsdb msg="Replaying WAL, this may take a while"
+thanos-ruler    | level=info ts=2025-02-04T22:24:02.78470985Z caller=head.go:597 component=tsdb msg="WAL segment loaded" segment=0 maxSegment=2
+thanos-ruler    | level=info ts=2025-02-04T22:24:02.784971969Z caller=head.go:597 component=tsdb msg="WAL segment loaded" segment=1 maxSegment=2
+thanos-ruler    | level=info ts=2025-02-04T22:24:02.785424449Z caller=head.go:597 component=tsdb msg="WAL segment loaded" segment=2 maxSegment=2
+thanos-ruler    | level=info ts=2025-02-04T22:24:02.785444397Z caller=head.go:603 component=tsdb msg="WAL replay completed" checkpoint_replay_duration=78.723µs wal_replay_duration=1.35185ms total_replay_duration=1.452792ms
+thanos-ruler    | level=info ts=2025-02-04T22:24:02.78636246Z caller=rule.go:733 msg="a leftover lockfile found and removed"
+thanos-ruler    | level=warn ts=2025-02-04T22:24:02.786375327Z caller=rule.go:419 msg="no alertmanager configured"
+thanos-ruler    | level=info ts=2025-02-04T22:24:02.786891656Z caller=options.go:27 component=rules protocol=gRPC msg="disabled TLS, key and cert must be set to enable"
+thanos-ruler    | level=info ts=2025-02-04T22:24:02.788300297Z caller=factory.go:49 component=rules msg="loading bucket configuration"
+thanos-ruler    | level=info ts=2025-02-04T22:24:02.788576409Z caller=rule.go:718 component=rules msg="starting rule node"
+thanos-ruler    | level=info ts=2025-02-04T22:24:02.788744682Z caller=intrumentation.go:60 component=rules msg="changing probe status" status=healthy
+thanos-ruler    | level=info ts=2025-02-04T22:24:02.788786912Z caller=http.go:63 component=rules service=http/server component=rule msg="listening for requests and metrics" address=0.0.0.0:10902
+thanos-ruler    | level=info ts=2025-02-04T22:24:02.788856702Z caller=rule.go:886 component=rules msg="reload rule files" numFiles=0
+thanos-ruler    | level=info ts=2025-02-04T22:24:02.788999525Z caller=tls_config.go:195 component=rules service=http/server component=rule msg="TLS is disabled." http2=false
+thanos-ruler    | level=info ts=2025-02-04T22:24:02.789013819Z caller=intrumentation.go:48 component=rules msg="changing probe status" status=ready
+thanos-ruler    | level=info ts=2025-02-04T22:24:02.789078542Z caller=grpc.go:131 component=rules service=gRPC/server component=rule msg="listening for serving gRPC" address=0.0.0.0:10901
+create_bucket-1  | mc: <ERROR> Unable to initialize new alias from the provided credentials. Get "http://minio:9000/probe-bsign-psiz6gyqlw60v2i2lm09riaewev2d1/?location=": dial tcp 172.22.0.6:9000: connect: connection refused.
+create_bucket-1  | Bucket created successfully `myminio/prometheus-data`.
+thanos-query     | level=info ts=2025-02-04T22:24:02.536797355Z caller=options.go:27 protocol=gRPC msg="disabled TLS, key and cert must be set to enable"
+thanos-query     | level=info ts=2025-02-04T22:24:02.537367424Z caller=query.go:695 msg="starting query node"
+thanos-query     | level=info ts=2025-02-04T22:24:02.53917715Z caller=intrumentation.go:48 msg="changing probe status" status=ready
+thanos-query     | level=info ts=2025-02-04T22:24:02.539434876Z caller=grpc.go:131 service=gRPC/server component=query msg="listening for serving gRPC" address=0.0.0.0:9092
+thanos-query     | level=info ts=2025-02-04T22:24:02.539574864Z caller=intrumentation.go:60 msg="changing probe status" status=healthy
+thanos-query     | level=info ts=2025-02-04T22:24:02.539591329Z caller=http.go:63 service=http/server component=query msg="listening for requests and metrics" address=0.0.0.0:9091
+thanos-query     | level=info ts=2025-02-04T22:24:02.539632104Z caller=tls_config.go:195 service=http/server component=query msg="TLS is disabled." http2=false
+thanos-query     | level=warn ts=2025-02-04T22:24:07.538070195Z caller=endpointset.go:500 component=endpointset msg="update of node failed" err="getting metadata: fallback fetching info from store:10901: rpc error: code = DeadlineExceeded desc = context deadline exceeded" address=store:10901
+thanos-query     | level=info ts=2025-02-04T22:24:07.538282322Z caller=endpointset.go:349 component=endpointset msg="adding new sidecar with [storeAPI rulesAPI exemplarsAPI targetsAPI MetricMetadataAPI]" address=sidecar:10901 extLset="{monitor=\"prometheus-58377\"}"
+thanos-query     | level=warn ts=2025-02-04T22:24:12.539848593Z caller=endpointset.go:500 component=endpointset msg="update of node failed" err="getting metadata: fallback fetching info from store:10901: rpc error: code = DeadlineExceeded desc = context deadline exceeded" address=store:10901
+thanos-query     | level=warn ts=2025-02-04T22:24:17.540823896Z caller=endpointset.go:500 component=endpointset msg="update of node failed" err="getting metadata: fallback fetching info from store:10901: rpc error: code = DeadlineExceeded desc = context deadline exceeded" address=store:10901
+thanos-query     | level=warn ts=2025-02-04T22:24:22.541715169Z caller=endpointset.go:500 component=endpointset msg="update of node failed" err="getting metadata: fallback fetching info from store:10901: rpc error: code = DeadlineExceeded desc = context deadline exceeded" address=store:10901
+thanos-query     | level=warn ts=2025-02-04T22:24:27.542883653Z caller=endpointset.go:500 component=endpointset msg="update of node failed" err="getting metadata: fallback fetching info from store:10901: rpc error: code = DeadlineExceeded desc = context deadline exceeded" address=store:10901
+thanos-query     | level=warn ts=2025-02-04T22:24:32.544266505Z caller=endpointset.go:500 component=endpointset msg="update of node failed" err="getting metadata: fallback fetching info from store:10901: rpc error: code = DeadlineExceeded desc = context deadline exceeded" address=store:10901
+thanos-query     | level=warn ts=2025-02-04T22:24:37.545637832Z caller=endpointset.go:500 component=endpointset msg="update of node failed" err="getting metadata: fallback fetching info from store:10901: rpc error: code = DeadlineExceeded desc = context deadline exceeded" address=store:10901
+frontend         | Grafana server is running with elevated privileges. This is not recommended
+frontend         | logger=settings t=2025-02-04T22:23:51.587771749Z level=info msg="Starting Grafana" version=11.5.0 commit=f7a938db9ad71c1558e93d8e29e69f42c8a5f50b branch=HEAD compiled=2025-02-04T22:23:51Z
+frontend         | logger=settings t=2025-02-04T22:23:51.588113092Z level=info msg="Config loaded from" file=/usr/share/grafana/conf/defaults.ini
+frontend         | logger=settings t=2025-02-04T22:23:51.588123434Z level=info msg="Config loaded from" file=/etc/grafana/grafana.ini
+frontend         | logger=settings t=2025-02-04T22:23:51.588128308Z level=info msg="Config overridden from command line" arg="default.paths.data=/var/lib/grafana"
+frontend         | logger=settings t=2025-02-04T22:23:51.588133155Z level=info msg="Config overridden from command line" arg="default.paths.logs=/var/log/grafana"
+frontend         | logger=settings t=2025-02-04T22:23:51.588137174Z level=info msg="Config overridden from command line" arg="default.paths.plugins=/var/lib/grafana/plugins"
+frontend         | logger=settings t=2025-02-04T22:23:51.588141242Z level=info msg="Config overridden from command line" arg="default.paths.provisioning=/etc/grafana/provisioning"
+frontend         | logger=settings t=2025-02-04T22:23:51.58814573Z level=info msg="Config overridden from command line" arg="default.log.mode=console"
+frontend         | logger=settings t=2025-02-04T22:23:51.588150166Z level=info msg="Config overridden from Environment variable" var="GF_PATHS_DATA=/var/lib/grafana"
+frontend         | logger=settings t=2025-02-04T22:23:51.588154218Z level=info msg="Config overridden from Environment variable" var="GF_PATHS_LOGS=/var/log/grafana"
+frontend         | logger=settings t=2025-02-04T22:23:51.588158122Z level=info msg="Config overridden from Environment variable" var="GF_PATHS_PLUGINS=/var/lib/grafana/plugins"
+frontend         | logger=settings t=2025-02-04T22:23:51.588162769Z level=info msg="Config overridden from Environment variable" var="GF_PATHS_PROVISIONING=/etc/grafana/provisioning"
+frontend         | logger=settings t=2025-02-04T22:23:51.588166887Z level=info msg=Target target=[all]
+frontend         | logger=settings t=2025-02-04T22:23:51.588175686Z level=info msg="Path Home" path=/usr/share/grafana
+frontend         | logger=settings t=2025-02-04T22:23:51.588179762Z level=info msg="Path Data" path=/var/lib/grafana
+frontend         | logger=settings t=2025-02-04T22:23:51.58818363Z level=info msg="Path Logs" path=/var/log/grafana
+frontend         | logger=settings t=2025-02-04T22:23:51.588187471Z level=info msg="Path Plugins" path=/var/lib/grafana/plugins
+frontend         | logger=settings t=2025-02-04T22:23:51.588191455Z level=info msg="Path Provisioning" path=/etc/grafana/provisioning
+frontend         | logger=settings t=2025-02-04T22:23:51.588195384Z level=info msg="App mode production"
+frontend         | logger=featuremgmt t=2025-02-04T22:23:51.588694549Z level=info msg=FeatureToggles accessControlOnCall=true publicDashboardsScene=true newDashboardSharingComponent=true panelMonitoring=true alertingNoDataErrorExecution=true transformationsRedesign=true angularDeprecationUI=true ssoSettingsApi=true promQLScope=true userStorageAPI=true alertingInsights=true prometheusAzureOverrideAudience=true openSearchBackendFlowEnabled=true kubernetesPlaylists=true influxdbBackendMigration=true newPDFRendering=true dashboardScene=true logsContextDatasourceUi=true dashboardSceneForViewers=true pinNavItems=true lokiQuerySplitting=true annotationPermissionUpdate=true cloudWatchNewLabelParsing=true onPremToCloudMigrations=true lokiStructuredMetadata=true cloudWatchRoundUpEndTime=true transformationsVariableSupport=true newFiltersUI=true azureMonitorEnableUserAuth=true dashboardSceneSolo=true lokiLabelNamesQueryApi=true recoveryThreshold=true alertingUIOptimizeReducer=true formatString=true cloudWatchCrossAccountQuerying=true logsInfiniteScrolling=true managedPluginsInstall=true addFieldFromCalculationStatFunctions=true correlations=true logRowsPopoverMenu=true groupToNestedTableTransformation=true lokiQueryHints=true unifiedRequestLog=true tlsMemcached=true logsExploreTableVisualisation=true awsAsyncQueryCaching=true accessActionSets=true dashgpt=true zipkinBackendMigration=true reportingUseRawTimeRange=true dataplaneFrontendFallback=true nestedFolders=true recordedQueriesMulti=true useSessionStorageForRedirection=true alertingSimplifiedRouting=true preinstallAutoUpdate=true alertingApiServer=true exploreMetrics=true
+frontend         | logger=sqlstore t=2025-02-04T22:23:51.58877063Z level=info msg="Connecting to DB" dbtype=sqlite3
+frontend         | logger=migrator t=2025-02-04T22:23:51.598729467Z level=info msg="Locking database"
+frontend         | logger=migrator t=2025-02-04T22:23:51.598941196Z level=info msg="Starting DB migrations"
+frontend         | logger=migrator t=2025-02-04T22:23:51.622641303Z level=info msg="migrations completed" performed=0 skipped=629 duration=1.084976ms
+frontend         | logger=migrator t=2025-02-04T22:23:51.623384607Z level=info msg="Unlocking database"
+frontend         | logger=secrets t=2025-02-04T22:23:51.623857463Z level=info msg="Envelope encryption state" enabled=true currentprovider=secretKey.v1
+frontend         | logger=plugin.angulardetectorsprovider.dynamic t=2025-02-04T22:23:51.750980332Z level=info msg="Restored cache from database" duration=504.654µs
+frontend         | logger=plugin.store t=2025-02-04T22:23:51.75293887Z level=info msg="Loading plugins..."
+frontend         | logger=local.finder t=2025-02-04T22:23:51.816773748Z level=warn msg="Skipping finding plugins as directory does not exist" path=/usr/share/grafana/plugins-bundled
+frontend         | logger=plugins.registration t=2025-02-04T22:23:51.891245752Z level=info msg="Plugin registered" pluginId=grafana-lokiexplore-app
+frontend         | logger=plugins.registration t=2025-02-04T22:23:51.964181125Z level=info msg="Plugin registered" pluginId=grafana-pyroscope-app
+frontend         | logger=plugin.store t=2025-02-04T22:23:51.964207508Z level=info msg="Plugins loaded" count=56 duration=211.26937ms
+frontend         | logger=resource-migrator t=2025-02-04T22:23:51.966005298Z level=info msg="Locking database"
+frontend         | logger=resource-migrator t=2025-02-04T22:23:51.966020897Z level=info msg="Starting DB migrations"
+frontend         | logger=resource-migrator t=2025-02-04T22:23:51.967106427Z level=info msg="migrations completed" performed=0 skipped=22 duration=39.09µs
+frontend         | logger=resource-migrator t=2025-02-04T22:23:51.967568056Z level=info msg="Unlocking database"
+frontend         | logger=provisioning.dashboard t=2025-02-04T22:23:51.971592621Z level=error msg="can't read dashboard provisioning files from directory" path=/etc/grafana/provisioning/dashboards error="open /etc/grafana/provisioning/dashboards: no such file or directory"
+frontend         | logger=query_data t=2025-02-04T22:23:51.972171553Z level=info msg="Query Service initialization"
+frontend         | logger=live.push_http t=2025-02-04T22:23:51.990785238Z level=info msg="Live Push Gateway initialization"
+frontend         | logger=ngalert.notifier.alertmanager org=1 t=2025-02-04T22:23:51.998544176Z level=info msg="Applying new configuration to Alertmanager" configHash=d2c56faca6af2a5772ff4253222f7386
+frontend         | logger=ngalert.state.manager t=2025-02-04T22:23:52.037057343Z level=info msg="Running in alternative execution of Error/NoData mode"
+frontend         | logger=cloudmigration.service t=2025-02-04T22:23:52.039373137Z level=info msg="using gcom client for auth"
+frontend         | logger=infra.usagestats.collector t=2025-02-04T22:23:52.039492211Z level=info msg="registering usage stat providers" usageStatsProvidersLen=2
+frontend         | logger=provisioning.plugins t=2025-02-04T22:23:52.079079782Z level=error msg="Failed to read plugin provisioning files from directory" path=/etc/grafana/provisioning/plugins error="open /etc/grafana/provisioning/plugins: no such file or directory"
+frontend         | logger=provisioning.alerting t=2025-02-04T22:23:52.079135232Z level=error msg="can't read alerting provisioning files from directory" path=/etc/grafana/provisioning/alerting error="open /etc/grafana/provisioning/alerting: no such file or directory"
+frontend         | logger=provisioning.alerting t=2025-02-04T22:23:52.079142949Z level=info msg="starting to provision alerting"
+thanos-compact   | level=info ts=2025-02-04T22:23:51.373435763Z caller=factory.go:49 msg="loading bucket configuration"
+thanos-compact   | level=info ts=2025-02-04T22:23:51.374004099Z caller=compact.go:612 msg="starting compact node"
+thanos-compact   | level=info ts=2025-02-04T22:23:51.374038475Z caller=intrumentation.go:48 msg="changing probe status" status=ready
+thanos-compact   | level=info ts=2025-02-04T22:23:51.374182883Z caller=intrumentation.go:60 msg="changing probe status" status=healthy
+thanos-compact   | level=info ts=2025-02-04T22:23:51.374247417Z caller=http.go:63 service=http/server component=compact msg="listening for requests and metrics" address=0.0.0.0:10902
+thanos-compact   | level=info ts=2025-02-04T22:23:51.374491953Z caller=tls_config.go:195 service=http/server component=compact msg="TLS is disabled." http2=false
+thanos-compact   | level=info ts=2025-02-04T22:23:51.374600026Z caller=compact.go:1245 msg="start sync of metas"
+frontend         | logger=provisioning.alerting t=2025-02-04T22:23:52.079153378Z level=info msg="finished to provision alerting"
+frontend         | logger=grafanaStorageLogger t=2025-02-04T22:23:52.082040132Z level=info msg="Storage starting"
+frontend         | logger=ngalert.state.manager t=2025-02-04T22:23:52.082448333Z level=info msg="Warming state cache for startup"
+frontend         | logger=ngalert.state.manager t=2025-02-04T22:23:52.082714315Z level=info msg="State cache has been initialized" states=0 duration=265.838µs
+frontend         | logger=ngalert.multiorg.alertmanager t=2025-02-04T22:23:52.082736628Z level=info msg="Starting MultiOrg Alertmanager"
+frontend         | logger=ngalert.scheduler t=2025-02-04T22:23:52.082772454Z level=info msg="Starting scheduler" tickInterval=10s maxAttempts=3
+frontend         | logger=ticker t=2025-02-04T22:23:52.082807457Z level=info msg=starting first_tick=2025-02-04T22:24:00Z
+frontend         | logger=http.server t=2025-02-04T22:23:52.085295162Z level=info msg="HTTP Server Listen" address=[::]:3000 protocol=http subUrl= socket=
+frontend         | logger=provisioning.dashboard t=2025-02-04T22:23:52.103554643Z level=error msg="can't read dashboard provisioning files from directory" path=/etc/grafana/provisioning/dashboards error="open /etc/grafana/provisioning/dashboards: no such file or directory"
+frontend         | logger=provisioning.dashboard t=2025-02-04T22:23:52.143990787Z level=info msg="starting to provision dashboards"
+frontend         | logger=provisioning.dashboard t=2025-02-04T22:23:52.151317787Z level=info msg="finished to provision dashboards"
+frontend         | logger=grafana-apiserver t=2025-02-04T22:23:52.388343414Z level=info msg="Adding GroupVersion playlist.grafana.app v0alpha1 to ResourceManager"
+frontend         | logger=resource-server t=2025-02-04T22:23:52.388556651Z level=warn msg="failed to register storage metrics" error="duplicate metrics collector registration attempted"
+frontend         | logger=resource-server t=2025-02-04T22:23:52.388630738Z level=warn msg="failed to register storage metrics" error="duplicate metrics collector registration attempted"
+frontend         | logger=resource-server t=2025-02-04T22:23:52.388684005Z level=warn msg="failed to register storage metrics" error="duplicate metrics collector registration attempted"
+frontend         | logger=grafana-apiserver t=2025-02-04T22:23:52.396111578Z level=info msg="Adding GroupVersion dashboard.grafana.app v0alpha1 to ResourceManager"
+frontend         | logger=grafana-apiserver t=2025-02-04T22:23:52.397621945Z level=info msg="Adding GroupVersion dashboard.grafana.app v1alpha1 to ResourceManager"
+frontend         | logger=grafana-apiserver t=2025-02-04T22:23:52.399048342Z level=info msg="Adding GroupVersion dashboard.grafana.app v2alpha1 to ResourceManager"
+frontend         | logger=grafana-apiserver t=2025-02-04T22:23:52.400158995Z level=info msg="Adding GroupVersion featuretoggle.grafana.app v0alpha1 to ResourceManager"
+frontend         | logger=grafana-apiserver t=2025-02-04T22:23:52.402090083Z level=info msg="Adding GroupVersion iam.grafana.app v0alpha1 to ResourceManager"
+frontend         | logger=grafana-apiserver t=2025-02-04T22:23:52.404885331Z level=info msg="Adding GroupVersion notifications.alerting.grafana.app v0alpha1 to ResourceManager"
+frontend         | logger=grafana-apiserver t=2025-02-04T22:23:52.405798778Z level=info msg="Adding GroupVersion userstorage.grafana.app v0alpha1 to ResourceManager"
+frontend         | logger=app-registry t=2025-02-04T22:23:52.465089765Z level=info msg="app registry initialized"
+frontend         | logger=grafana.update.checker t=2025-02-04T22:23:52.490981337Z level=info msg="Update check succeeded" duration=409.509354ms
+frontend         | logger=plugins.update.checker t=2025-02-04T22:23:52.503258869Z level=info msg="Update check succeeded" duration=421.732669ms
+frontend         | logger=plugin.angulardetectorsprovider.dynamic t=2025-02-04T22:23:52.560984042Z level=info msg="Patterns update finished" duration=410.211438ms
+thanos-compact   | level=warn ts=2025-02-04T22:23:52.421886924Z caller=intrumentation.go:54 msg="changing probe status" status=not-ready reason="compaction: sync: BaseFetcher: iter bucket: The specified bucket does not exist"
+thanos-compact   | level=info ts=2025-02-04T22:23:52.421920397Z caller=http.go:74 service=http/server component=compact msg="internal server is shutting down" err="compaction: sync: BaseFetcher: iter bucket: The specified bucket does not exist"
+thanos-compact   | level=info ts=2025-02-04T22:23:52.424138452Z caller=http.go:93 service=http/server component=compact msg="internal server is shutdown gracefully" err="compaction: sync: BaseFetcher: iter bucket: The specified bucket does not exist"
+thanos-compact   | level=info ts=2025-02-04T22:23:52.424184888Z caller=intrumentation.go:66 msg="changing probe status" status=not-healthy reason="compaction: sync: BaseFetcher: iter bucket: The specified bucket does not exist"
+thanos-compact   | level=error ts=2025-02-04T22:23:52.424280713Z caller=main.go:158 err="BaseFetcher: iter bucket: The specified bucket does not exist\nsync\ngithub.com/thanos-io/thanos/pkg/compact.(*BucketCompactor).Compact\n\t/home/circleci/project/pkg/compact/compact.go:1247\nmain.runCompact.func7\n\t/home/circleci/project/cmd/thanos/compact.go:416\nmain.runCompact.func8\n\t/home/circleci/project/cmd/thanos/compact.go:466\ngithub.com/oklog/run.(*Group).Run.func1\n\t/home/circleci/go/pkg/mod/github.com/oklog/run@v1.1.0/group.go:38\nruntime.goexit\n\t/usr/local/go/src/runtime/asm_amd64.s:1371\ncompaction\nmain.runCompact.func7\n\t/home/circleci/project/cmd/thanos/compact.go:417\nmain.runCompact.func8\n\t/home/circleci/project/cmd/thanos/compact.go:466\ngithub.com/oklog/run.(*Group).Run.func1\n\t/home/circleci/go/pkg/mod/github.com/oklog/run@v1.1.0/group.go:38\nruntime.goexit\n\t/usr/local/go/src/runtime/asm_amd64.s:1371\ncompact command failed\nmain.main\n\t/home/circleci/project/cmd/thanos/main.go:158\nruntime.main\n\t/usr/local/go/src/runtime/proc.go:225\nruntime.goexit\n\t/usr/local/go/src/runtime/asm_amd64.s:1371"
+minio-storage-layer  | MinIO Object Storage Server
+minio-storage-layer  | Copyright: 2015-2025 MinIO, Inc.
+minio-storage-layer  | License: GNU AGPLv3 - https://www.gnu.org/licenses/agpl-3.0.html
+minio-storage-layer  | Version: RELEASE.2025-01-20T14-49-07Z (go1.23.5 linux/amd64)
+minio-storage-layer  | 
+minio-storage-layer  | API: http://172.22.0.6:9000  http://127.0.0.1:9000 
+minio-storage-layer  | WebUI: http://172.22.0.6:9001 http://127.0.0.1:9001  
+minio-storage-layer  | 
+minio-storage-layer  | Docs: https://docs.min.io
+thanos-store         | level=info ts=2025-02-04T22:23:52.62495885Z caller=factory.go:49 msg="loading bucket configuration"
+thanos-store         | level=info ts=2025-02-04T22:23:52.625323049Z caller=inmemory.go:174 msg="created in-memory index cache" maxItemSizeBytes=131072000 maxSizeBytes=262144000 maxItems=maxInt
+thanos-store         | level=info ts=2025-02-04T22:23:52.625712244Z caller=options.go:27 protocol=gRPC msg="disabled TLS, key and cert must be set to enable"
+thanos-store         | level=info ts=2025-02-04T22:23:52.626984737Z caller=store.go:448 msg="starting store node"
+thanos-store         | level=info ts=2025-02-04T22:23:52.627065942Z caller=store.go:367 msg="initializing bucket store"
+thanos-store         | level=info ts=2025-02-04T22:23:52.627106479Z caller=intrumentation.go:60 msg="changing probe status" status=healthy
+thanos-store         | level=info ts=2025-02-04T22:23:52.627147821Z caller=http.go:63 service=http/server component=store msg="listening for requests and metrics" address=0.0.0.0:10902
+thanos-store         | level=info ts=2025-02-04T22:23:52.62737797Z caller=tls_config.go:195 service=http/server component=store msg="TLS is disabled." http2=false
+thanos-store         | level=warn ts=2025-02-04T22:23:52.629072728Z caller=intrumentation.go:54 msg="changing probe status" status=not-ready reason="bucket store initial sync: sync block: BaseFetcher: iter bucket: The specified bucket does not exist"
+thanos-store         | level=info ts=2025-02-04T22:23:52.629098683Z caller=http.go:74 service=http/server component=store msg="internal server is shutting down" err="bucket store initial sync: sync block: BaseFetcher: iter bucket: The specified bucket does not exist"
+thanos-store         | level=info ts=2025-02-04T22:23:52.629151964Z caller=intrumentation.go:48 msg="changing probe status" status=ready
+thanos-store         | level=info ts=2025-02-04T22:23:52.629200442Z caller=grpc.go:131 service=gRPC/server component=store msg="listening for serving gRPC" address=0.0.0.0:10901
+thanos-store         | level=info ts=2025-02-04T22:23:52.631330948Z caller=http.go:93 service=http/server component=store msg="internal server is shutdown gracefully" err="bucket store initial sync: sync block: BaseFetcher: iter bucket: The specified bucket does not exist"
+thanos-store         | level=info ts=2025-02-04T22:23:52.63137416Z caller=intrumentation.go:66 msg="changing probe status" status=not-healthy reason="bucket store initial sync: sync block: BaseFetcher: iter bucket: The specified bucket does not exist"
+thanos-store         | level=warn ts=2025-02-04T22:23:52.631426383Z caller=intrumentation.go:54 msg="changing probe status" status=not-ready reason="bucket store initial sync: sync block: BaseFetcher: iter bucket: The specified bucket does not exist"
+thanos-store         | level=info ts=2025-02-04T22:23:52.631441909Z caller=grpc.go:138 service=gRPC/server component=store msg="internal server is shutting down" err="bucket store initial sync: sync block: BaseFetcher: iter bucket: The specified bucket does not exist"
+thanos-store         | level=info ts=2025-02-04T22:23:52.631460966Z caller=grpc.go:151 service=gRPC/server component=store msg="gracefully stopping internal server"
+thanos-store         | level=info ts=2025-02-04T22:23:52.631501261Z caller=grpc.go:164 service=gRPC/server component=store msg="internal server is shutdown gracefully" err="bucket store initial sync: sync block: BaseFetcher: iter bucket: The specified bucket does not exist"
+thanos-store         | level=error ts=2025-02-04T22:23:52.631631995Z caller=main.go:158 err="The specified bucket does not exist\nBaseFetcher: iter bucket\ngithub.com/thanos-io/thanos/pkg/block.(*BaseFetcher).fetchMetadata\n\t/home/circleci/project/pkg/block/fetcher.go:379\ngithub.com/thanos-io/thanos/pkg/block.(*BaseFetcher).fetch.func2\n\t/home/circleci/project/pkg/block/fetcher.go:443\ngithub.com/golang/groupcache/singleflight.(*Group).Do\n\t/home/circleci/go/pkg/mod/github.com/golang/groupcache@v0.0.0-20210331224755-41bb18bfe9da/singleflight/singleflight.go:56\ngithub.com/thanos-io/thanos/pkg/block.(*BaseFetcher).fetch\n\t/home/circleci/project/pkg/block/fetcher.go:441\ngithub.com/thanos-io/thanos/pkg/block.(*MetaFetcher).Fetch\n\t/home/circleci/project/pkg/block/fetcher.go:509\ngithub.com/thanos-io/thanos/pkg/store.(*BucketStore).SyncBlocks\n\t/home/circleci/project/pkg/store/bucket.go:456\ngithub.com/thanos-io/thanos/pkg/store.(*BucketStore).InitialSync\n\t/home/circleci/project/pkg/store/bucket.go:525\nmain.runStore.func4\n\t/home/circleci/project/cmd/thanos/store.go:369\ngithub.com/oklog/run.(*Group).Run.func1\n\t/home/circleci/go/pkg/mod/github.com/oklog/run@v1.1.0/group.go:38\nruntime.goexit\n\t/usr/local/go/src/runtime/asm_amd64.s:1371\nsync block\ngithub.com/thanos-io/thanos/pkg/store.(*BucketStore).InitialSync\n\t/home/circleci/project/pkg/store/bucket.go:526\nmain.runStore.func4\n\t/home/circleci/project/cmd/thanos/store.go:369\ngithub.com/oklog/run.(*Group).Run.func1\n\t/home/circleci/go/pkg/mod/github.com/oklog/run@v1.1.0/group.go:38\nruntime.goexit\n\t/usr/local/go/src/runtime/asm_amd64.s:1371\nbucket store initial sync\nmain.runStore.func4\n\t/home/circleci/project/cmd/thanos/store.go:371\ngithub.com/oklog/run.(*Group).Run.func1\n\t/home/circleci/go/pkg/mod/github.com/oklog/run@v1.1.0/group.go:38\nruntime.goexit\n\t/usr/local/go/src/runtime/asm_amd64.s:1371\nstore command failed\nmain.main\n\t/home/circleci/project/cmd/thanos/main.go:158\nruntime.main\n\t/usr/local/go/src/runtime/proc.go:225\nruntime.goexit\n\t/usr/local/go/src/runtime/asm_amd64.s:1371"
+prometheus           | time=2025-02-04T22:23:51.465Z level=INFO source=main.go:683 msg="Starting Prometheus Server" mode=server version="(version=3.1.0, branch=HEAD, revision=7086161a93b262aa0949dbf2aba15a5a7b13e0a3)"
+prometheus           | time=2025-02-04T22:23:51.465Z level=INFO source=main.go:688 msg="operational information" build_context="(go=go1.23.4, platform=linux/amd64, user=root@74c225e2044f, date=20250102-13:52:43, tags=netgo,builtinassets,stringlabels)" host_details="(Linux 6.8.0-51-generic #52-Ubuntu SMP PREEMPT_DYNAMIC Thu Dec  5 13:09:44 UTC 2024 x86_64 c4dd639f0bac (none))" fd_limits="(soft=1048576, hard=1048576)" vm_limits="(soft=unlimited, hard=unlimited)"
+prometheus           | time=2025-02-04T22:23:51.466Z level=INFO source=main.go:764 msg="Leaving GOMAXPROCS=4: CPU quota undefined" component=automaxprocs
+prometheus           | time=2025-02-04T22:23:51.469Z level=INFO source=web.go:650 msg="Start listening for connections" component=web address=0.0.0.0:9090
+prometheus           | time=2025-02-04T22:23:51.469Z level=INFO source=main.go:1224 msg="Starting TSDB ..."
+prometheus           | time=2025-02-04T22:23:51.470Z level=INFO source=repair.go:54 msg="Found healthy block" component=tsdb mint=1738681205722 maxt=1738684800000 ulid=01JK8WRS1R1SYRP01AJS565AEF
+prometheus           | time=2025-02-04T22:23:51.470Z level=INFO source=repair.go:54 msg="Found healthy block" component=tsdb mint=1738684805722 maxt=1738688400000 ulid=01JK906MNNN21TQ1FXD6B3TBSX
+prometheus           | time=2025-02-04T22:23:51.470Z level=INFO source=repair.go:54 msg="Found healthy block" component=tsdb mint=1738688405722 maxt=1738692000000 ulid=01JK93MG9RYA1XSQTZZJXA1KRB
+prometheus           | time=2025-02-04T22:23:51.470Z level=INFO source=repair.go:54 msg="Found healthy block" component=tsdb mint=1738692005722 maxt=1738695600000 ulid=01JK972BXR2YWDX5XK9DV84GT1
+prometheus           | time=2025-02-04T22:23:51.470Z level=INFO source=repair.go:54 msg="Found healthy block" component=tsdb mint=1738695605722 maxt=1738699200000 ulid=01JK9AG7HRW835ZCJTYDAPVA9E
+prometheus           | time=2025-02-04T22:23:51.471Z level=INFO source=repair.go:54 msg="Found healthy block" component=tsdb mint=1738699205722 maxt=1738702800000 ulid=01JK9DY35S5VTWZB5Q6AY71PQR
+prometheus           | time=2025-02-04T22:23:51.471Z level=INFO source=tls_config.go:347 msg="Listening on" component=web address=[::]:9090
+prometheus           | time=2025-02-04T22:23:51.473Z level=INFO source=tls_config.go:350 msg="TLS is disabled." component=web http2=false address=[::]:9090
+prometheus           | time=2025-02-04T22:23:51.479Z level=INFO source=head.go:628 msg="Replaying on-disk memory mappable chunks if any" component=tsdb
+prometheus           | time=2025-02-04T22:23:51.479Z level=INFO source=head.go:715 msg="On-disk memory mappable chunks replay completed" component=tsdb duration=29.774µs
+prometheus           | time=2025-02-04T22:23:51.479Z level=INFO source=head.go:723 msg="Replaying WAL, this may take a while" component=tsdb
+prometheus           | time=2025-02-04T22:23:51.481Z level=INFO source=head.go:760 msg="WAL checkpoint loaded" component=tsdb
+prometheus           | time=2025-02-04T22:23:51.483Z level=INFO source=head.go:795 msg="WAL segment loaded" component=tsdb segment=42 maxSegment=46
+prometheus           | time=2025-02-04T22:23:51.485Z level=INFO source=head.go:795 msg="WAL segment loaded" component=tsdb segment=43 maxSegment=46
+prometheus           | time=2025-02-04T22:23:51.488Z level=INFO source=head.go:795 msg="WAL segment loaded" component=tsdb segment=44 maxSegment=46
+prometheus           | time=2025-02-04T22:23:51.490Z level=INFO source=head.go:795 msg="WAL segment loaded" component=tsdb segment=45 maxSegment=46
+prometheus           | time=2025-02-04T22:23:51.490Z level=INFO source=head.go:795 msg="WAL segment loaded" component=tsdb segment=46 maxSegment=46
+prometheus           | time=2025-02-04T22:23:51.490Z level=INFO source=head.go:832 msg="WAL replay completed" component=tsdb checkpoint_replay_duration=1.834431ms wal_replay_duration=8.977416ms wbl_replay_duration=151ns chunk_snapshot_load_duration=0s mmap_chunk_replay_duration=29.774µs total_replay_duration=10.920152ms
+prometheus           | time=2025-02-04T22:23:51.495Z level=INFO source=main.go:1245 msg="filesystem information" fs_type=EXT4_SUPER_MAGIC
+prometheus           | time=2025-02-04T22:23:51.496Z level=INFO source=main.go:1248 msg="TSDB started"
+prometheus           | time=2025-02-04T22:23:51.496Z level=INFO source=main.go:1433 msg="Loading configuration file" filename=/etc/prometheus/prometheus.yml
+prometheus           | time=2025-02-04T22:23:51.496Z level=INFO source=main.go:1472 msg="updated GOGC" old=100 new=75
+prometheus           | time=2025-02-04T22:23:51.497Z level=INFO source=main.go:1482 msg="Completed loading of configuration file" db_storage=748ns remote_storage=1.199µs web_handler=436ns query_engine=11.515µs scrape=264.387µs scrape_sd=19.265µs notify=34.179µs notify_sd=684ns rules=1.165µs tracing=4.188µs filename=/etc/prometheus/prometheus.yml totalDuration=1.700017ms
+prometheus           | time=2025-02-04T22:23:51.498Z level=INFO source=main.go:1209 msg="Server is ready to receive web requests."
+prometheus           | time=2025-02-04T22:23:51.498Z level=INFO source=manager.go:169 msg="Starting rule manager..." component="rule manager"

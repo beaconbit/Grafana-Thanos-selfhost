@@ -116,7 +116,7 @@ def count_updater():
                         logging.debug(f'{colour.magenta}Counter: device {ip} : {mac} new count {count}{colour.reset}')
                     else:
                         delete_me.append(ip)
-        time.sleep(5) 
+        time.sleep(1) 
             
 
 
@@ -136,7 +136,7 @@ def clean_up():
                             break
             # reset the kill list
             delete_me = []
-        time.sleep(240) 
+        time.sleep(2) 
 
 # working
 def scanner():
@@ -152,7 +152,7 @@ def scanner():
                     not_blacklisted[mac] = ip
             mac_to_ip.update(not_blacklisted)
             logging.debug(f'{colour.green}Scanner: mac_to_ip = {mac_to_ip}{colour.reset}')
-        time.sleep(15) 
+        time.sleep(1) 
 
 # working
 def device_manager():
@@ -187,6 +187,8 @@ def cookie_monster():
                     if result['error'] is None:
                         ip_to_cookie[ip] = result['value']
                         cookie_ttl[result['value']] = 300
+                        logging.debug(f'{colour.blue}ip: {ip}{colour.reset}')
+                        logging.debug(f'{colour.blue}{ip_to_cookie}{colour.reset}')
                     else:
                         ip_to_cookie[ip] = None
                         err = result['error']
@@ -194,7 +196,7 @@ def cookie_monster():
             # clean up all the invalid cookies
             ip_to_cookie = {key: value for key, value in ip_to_cookie.items() if value is not None}
             logging.debug(f'Cookie Monster: ip_to_cookie = {ip_to_cookie}')
-        time.sleep(420) 
+        time.sleep(1) 
 
 def lifetime_manager():
     global cookie_to_refresh
