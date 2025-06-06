@@ -2,13 +2,22 @@ from scapy.all import ARP, Ether, srp
 from bs4 import BeautifulSoup
 import requests 
 import socket
+import netifaces
+import logging
+
+def get_ip(interface):
+    logging.debug('running get_ip')
+    addrs = netifaces.ifaddresses(interface)
+    if netifaces.AF_INET in addrs:
+        return addrs[netifaces.AF_INET][0]['addr']
+    return None
 
 def get_local_ip():
+    logging.debug('running get_local_ip')
     try:
-        # Connect to a public server to determine the local IP
-        with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as s:
-            s.connect(("8.8.8.8", 80))  # Google's public DNS server
-            local_ip = s.getsockname()[0]
+        #local_ip = get_ip("enx72b1b1c1c8da")
+        local_ip = get_ip("eno1")
+        logging.debug(f'local ip: {local_ip}')
         return local_ip
     except Exception as e:
         return f"Error: {e}"
@@ -19,10 +28,12 @@ def scan_network():
     arp = ARP(pdst=ip_range)
     ether = Ether(dst="ff:ff:ff:ff:ff:ff")
     packet = ether / arp
-    result = srp(packet, timeout=2, verbose=False)[0]
+    result = srp(packet, iface="eno1", timeout=3, verbose=False)[0]
+
 
     # Extract IP and MAC addresses from the response
     devices = {}
     for sent, received in result:
+        logging.debug(f'Host: {received.psrc} MAC: {received.hwsrc}')
         devices[received.hwsrc] = received.psrc
     return devices

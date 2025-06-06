@@ -65,6 +65,7 @@ def scanner():
     #logging.debug(f'{colour.green}Scanner: starting{colour.reset}')
     while True:
         new_active_ips = scan_network() # returns a dict { '43:cc:ff:aa:23:45': '10.0.0.2', ... }
+        logging.debug(f'{colour.red} scan found: {new_active_ips}{colour.reset}')
         with lock:
             mac_to_ip.update(new_active_ips)
             #logging.debug(f'{colour.green}Scanner: mac_to_ip = {mac_to_ip}{colour.reset}')

@@ -3,9 +3,19 @@ FROM python:3.10-slim
 
 # Set the working directory in the container
 WORKDIR /app
+# Install build dependencies
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    gcc \
+    python3-dev \
+    libffi-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+COPY app/requirements.txt .
+
+# Optional: Upgrade pip, setuptools, and wheel to avoid build issues
+RUN pip install --upgrade pip setuptools wheel
 
 # Copy the requirements file and install dependencies
-COPY app/requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy the rest of the application code
