@@ -5,8 +5,8 @@ from bs4 import BeautifulSoup
 
 def get_cookie(ip):
     username="root"
-    #password="ubuntu"
-    password="10011230"
+    password="ubuntu"
+    #password="10011230"
     url = f"http://{ip}/config"
     hash_output = ""
     try:

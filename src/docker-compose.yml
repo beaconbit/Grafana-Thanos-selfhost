@@ -5,6 +5,7 @@ services:
     build:
       context: ./python  # The directory containing your Dockerfile and application code
       dockerfile: Dockerfile.python
+      network: host    
     environment:
       - APP_ENV=production  # Example: Pass environment variables to the container
     network_mode: host
@@ -37,6 +38,7 @@ services:
     volumes:
       - ./grafana/provisioning:/etc/grafana/provisioning  # Mount provisioning directory
       - ./data/grafana:/var/lib/grafana  # Persist Grafana data
+      - ./grafana:/etc/grafana  # Mount grafana to access grafana.ini
     networks:
       - thanos
 
@@ -46,6 +48,7 @@ services:
     build:
         context: .
         dockerfile: Dockerfile.minio
+        network: host    
     restart: always
     working_dir: "/minio-image/storage"
     volumes:

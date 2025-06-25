@@ -55,6 +55,8 @@ ip_to_cookie = {}   # a dict {'10.0.0.3', cookie}
 mac_to_count = {}   # a dict {'43:cb:7d:71:27:74', [0,0,0,0,0,0,0,0]}
 mac_to_gauges = {}  # a dict {'43:cb:7d:71:27:74': [Gauge, Gauge, Gauge, Gauge, Gauge, Gauge, Gauge, Gauge]}
 blacklist = []
+blacklist_ttl = 1200
+refresh_blacklist_counter = blacklist_ttl
 
 # Lock for shared data
 lock = threading.Lock()
@@ -65,7 +67,7 @@ def scanner():
     #logging.debug(f'{colour.green}Scanner: starting{colour.reset}')
     while True:
         new_active_ips = scan_network() # returns a dict { '43:cc:ff:aa:23:45': '10.0.0.2', ... }
-        logging.debug(f'{colour.red} scan found: {new_active_ips}{colour.reset}')
+        logging.debug(f'{colour.green} scan found: {new_active_ips}{colour.reset}')
         with lock:
             mac_to_ip.update(new_active_ips)
             #logging.debug(f'{colour.green}Scanner: mac_to_ip = {mac_to_ip}{colour.reset}')
@@ -74,8 +76,25 @@ def scanner():
 def cookie_monster():
     global ip_to_cookie
     global mac_to_ip 
+    global ip_to_cookie
     global blacklist
+    global refresh_blacklist_counter 
+    global blacklist_ttl
     while True:
+
+        with lock:
+            refresh_blacklist_counter -= 1
+            logging.debug(f'{colour.yellow}Blacklist ttl value {refresh_blacklist_counter}{colour.reset}')
+            if refresh_blacklist_counter == 0:
+                logging.debug(f'{colour.blue}{blacklist}{colour.reset}')
+                blacklist = []
+                mac_to_ip = {}
+                ip_to_cookie = {}
+                logging.debug(f'{colour.blue}Blacklist reset{colour.reset}')
+                logging.debug(f'{colour.blue}{blacklist}{colour.reset}')
+                refresh_blacklist_counter = blacklist_ttl
+                logging.debug(f'{colour.blue}Blacklist ttl value {refresh_blacklist_counter}{colour.reset}')
+
         # Step 1: Copy the shared map under lock
         with lock:
             # shallow copy, blacklisted mac's filtered out
@@ -186,6 +205,7 @@ def count_updater():
                 # delete mac to ip, and ip to cookie
                 with lock:
                     logging.debug(f'{colour.red}Counter: deleting everything, ip and mac and cookie {colour.reset}')
+                    logging.debug(f'{colour.magenta}Blacklist: {blacklist}{colour.reset}')
                     if mac in mac_to_ip:
                         del mac_to_ip[mac]
                     if ip in ip_to_cookie:
