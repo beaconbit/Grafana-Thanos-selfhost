@@ -1,0 +1,14 @@
+services:
+
+  # Python service that continually scrapes metrics and exposes them in a format prometheus understands
+  metric_daemon:
+    build:
+      dockerfile: Dockerfile.python
+      network: host
+    environment:
+      - APP_ENV=production  # Example: Pass environment variables to the container
+    network_mode: host
+    cap_add:
+      - NET_RAW
+      - NET_ADMIN
+    command: ["python", "main.py"]
