@@ -1,2 +1,8 @@
 **/data/*
 **/storage/*
+**/config.yaml
+**/__pycache__
+**/__pycache__/*
+**/logs
+**/venv
+**/venv/*

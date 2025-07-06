@@ -36,7 +36,9 @@ class DeviceRegistry:
                     'username': None,
                     'password': None,
                     'cookie': None,
-                    'cookie_expires': None,
+                    'cookie_expires': 0,
+                    'auth_flow': None,
+                    'scraper': None,
                     'last_data': None,
                     'last_seen': None,
                 }
@@ -44,6 +46,32 @@ class DeviceRegistry:
             else:
                 self._devices[mac]['ip'] = ip
                 logger.debug(f"Updated device IP: {mac} -> {ip}")
+
+    def get_handle_to_self_invalidate(self, mac):
+        def invalidate():
+            with self._lock:
+                if mac in self._devices:
+                    self._devices[mac]['valid'] = False
+                    logger.warning(f"Device marked invalid: {mac}")
+        return invalidate
+
+    def get_handle_to_self_validate(self, mac):
+        def validate(password, username, auth_flow, scraper):
+            with self._lock:
+                if mac in self._devices:
+                    self._devices[mac]['valid'] = True
+                    self._devices[mac]['password'] = password
+                    self._devices[mac]['username'] = username
+                    self._devices[mac]['auth_flow'] = auth_flow
+                    self._devices[mac]['scraper'] = scraper
+                    logger.info(f"Device marked valid: {mac}")
+        return validate
+
+    def mark_valid(self, mac):
+        with self._lock:
+            if mac in self._devices:
+                self._devices[mac]['valid'] = True
+                logger.info(f"Device marked valid: {mac}")
 
     def mark_invalid(self, mac):
         with self._lock:

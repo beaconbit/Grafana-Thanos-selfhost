@@ -14,7 +14,7 @@ services:
       - NET_ADMIN
     command: ["python", "new_main.py"]
 
-  # If you must keep python-app on host and prometheus on thanos, 
+  # If you must keep metric_daemon on host and prometheus on thanos, 
   # run a small reverse proxy (like NGINX or socat) inside the thanos network to forward 
   # requests to localhost:8000 on the host.
   # 
