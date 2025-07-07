@@ -1,7 +1,6 @@
 # main.py
 import threading
 import time
-
 from utils.logging import setup_logger
 from config import load_config
 from master.scanner import ScannerThread

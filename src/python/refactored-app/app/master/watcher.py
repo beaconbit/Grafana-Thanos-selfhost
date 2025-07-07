@@ -49,6 +49,7 @@ class WatcherThread(threading.Thread):
             else: # kill threads that are no longer valid 
                 logger.debug(f"Found Invalid Device {mac}. KILLING !!")
                 if mac in self.device_threads:
+                    logger.debug(f"Found Invalid Device {mac}.  REALLY KILLING IT !!")
                     self.stop_worker_for_device(mac)
 
     def stop(self):
@@ -66,3 +67,5 @@ class WatcherThread(threading.Thread):
         thread.stop()
         thread.join()
         del self.device_threads[mac]
+        logger.debug(f"Found Invalid Device {mac}.  FINISHED KILLING IT !!")
+        logger.debug(f"{self.device_threads}")

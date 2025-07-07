@@ -2,10 +2,12 @@
 import threading
 import logging
 import time
+import copy
 from device.utils.auth_flow_registry import auth_flow_registry
 from device.utils.scraper_registry import scraper_registry
 from device.utils.brute_force import brute_force
 from utils.logging import setup_logger
+from config import load_config
 
 logger = setup_logger(__name__)
 
@@ -41,13 +43,16 @@ class DeviceWorker(threading.Thread):
                 # TODO after scraping data expose it to an endpoint so prometheus can scrape it
                 else:
                     # brute_force will throw an error if all the auth flows fail
-                    password, username, auth_flow, scraper = brute_force(self.device)
+                    password, username, auth_flow, scraper, cookie = brute_force(copy.deepcopy(self.device))
+                    if password is None or username is None or auth_flow is None or scraper is None:
+                        raise ValueError("Brute force failed")
                     logger.critical(f"Brute force returned password:{password} username:{username} auth_flow:{auth_flow} scraper:{scraper}")
                     self.device['password'] = password
                     self.device['username'] = username
                     self.device['auth_flow'] = auth_flow
                     self.device['scraper'] = scraper
-                    self.device['cookie_expires'] = -1
+                    self.device['cookie'] = cookie
+                    self.reset_cookie_expiration()
                     self.validate(password, username, auth_flow, scraper)
                     self.update_device_field(password=password, username=username, auth_flow=auth_flow, scraper=scraper)
             except Exception as e:
@@ -55,8 +60,8 @@ class DeviceWorker(threading.Thread):
                 self.device['failures'] += 1
                 logger.error(f"Incrementing device failure count {self.device.get('failures')}")
 
-            logger.debug(f"Working on device {mac}")
             time.sleep(5)  # simulate periodic work
+        logger.debug(f"Thread stopping for device {mac}")
 
     def stop(self):
         self.running = False
