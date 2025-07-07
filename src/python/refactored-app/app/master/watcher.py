@@ -44,7 +44,8 @@ class WatcherThread(threading.Thread):
                 if mac not in self.device_threads:
                     validate = registry.get_handle_to_self_validate(mac)
                     invalidate = registry.get_handle_to_self_invalidate(mac)
-                    self.start_worker_for_device(device, validate, invalidate)
+                    update_device_field = registry.get_handle_to_update_device_field(mac)
+                    self.start_worker_for_device(device, validate, invalidate, update_device_field)
             else: # kill threads that are no longer valid 
                 logger.debug(f"Found Invalid Device {mac}. KILLING !!")
                 if mac in self.device_threads:
@@ -54,9 +55,9 @@ class WatcherThread(threading.Thread):
         self.running = False
 
     # Individual device thread management
-    def start_worker_for_device(self, device, validate, invalidate):
+    def start_worker_for_device(self, device, validate, invalidate, update_device_field):
         mac = device["mac"]
-        thread = DeviceWorker(device, validate, invalidate)
+        thread = DeviceWorker(device, validate, invalidate, update_device_field)
         thread.start()
         self.device_threads[mac] = thread
 

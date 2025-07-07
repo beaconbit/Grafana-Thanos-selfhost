@@ -10,11 +10,12 @@ from utils.logging import setup_logger
 logger = setup_logger(__name__)
 
 class DeviceWorker(threading.Thread):
-    def __init__(self, device: dict, validate, invalidate):
+    def __init__(self, device: dict, validate, invalidate, update_device_field):
         super().__init__()
         self.device = device
         self.validate = validate
         self.invalidate = invalidate
+        self.update_device_field = update_device_field
         self.daemon = True
         self.running = True
 
@@ -48,6 +49,7 @@ class DeviceWorker(threading.Thread):
                     self.device['scraper'] = scraper
                     self.device['cookie_expires'] = -1
                     self.validate(password, username, auth_flow, scraper)
+                    self.update_device_field(password=password, username=username, auth_flow=auth_flow, scraper=scraper)
             except Exception as e:
                 logger.error(f"Device {self.device['mac']} failed: {e}")
                 self.device['failures'] += 1

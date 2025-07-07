@@ -24,9 +24,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy the rest of the application code
 COPY app/ .
 
+RUN chmod +x entrypoint.sh
 # (Optional) Run a database init step if needed during build
 #RUN python init_db.py
 
-# Define default command (can be overridden at runtime)
-CMD ["python", "main.py"]
 

@@ -11,4 +11,6 @@ services:
     cap_add:
       - NET_RAW
       - NET_ADMIN
-    command: ["python", "main.py"]
+    command: ["/bin/bash", "entrypoint.sh"]
+    volumes:
+      - ./app/db/data:/app/db/data
