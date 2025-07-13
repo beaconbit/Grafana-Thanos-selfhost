@@ -1,16 +1,27 @@
 services:
+  nats:
+    image: nats:2.10
+    command: ["-js", "-m", "8222", "-store_dir", "/data/nats/jetstream"]
+    ports:
+      - "4222:4222"
+      - "8222:8222"
+    volumes:
+      - ./nats_data:/data/nats
 
-  # Python service that continually scrapes metrics and exposes them in a format prometheus understands
+
+  # Python service that continually scrapes metrics and publishes them to NATS
   metric_daemon:
     build:
       dockerfile: Dockerfile.python
-      network: host
-    environment:
-      - APP_ENV=production  # Example: Pass environment variables to the container
     network_mode: host
     cap_add:
       - NET_RAW
       - NET_ADMIN
-    command: ["/bin/bash", "entrypoint.sh"]
     volumes:
       - ./app/db/data:/app/db/data
+    command: ["/bin/bash", "entrypoint.sh"]
+    depends_on:
+      - nats
+    environment:
+      - APP_ENV=production  # Example: Pass environment variables to the container
+

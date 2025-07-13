@@ -7,17 +7,19 @@ from device.utils.auth_flow_registry import auth_flow_registry
 from device.utils.scraper_registry import scraper_registry
 from device.utils.brute_force import brute_force
 from utils.logging import setup_logger
+from utils.message import TelemetryMessage
 from config import load_config
 
 logger = setup_logger(__name__)
 
 class DeviceWorker(threading.Thread):
-    def __init__(self, device: dict, validate, invalidate, update_device_field):
+    def __init__(self, device: dict, validate, invalidate, update_device_field, publish):
         super().__init__()
         self.device = device
         self.validate = validate
         self.invalidate = invalidate
         self.update_device_field = update_device_field
+        self.publish = publish
         self.daemon = True
         self.running = True
 
@@ -40,7 +42,8 @@ class DeviceWorker(threading.Thread):
                     data = self.scrape()
                     logger.info(f"Finished scraping le daataa: {data}")
                     logger.critical(f"data: {data}")
-                # TODO after scraping data expose it to an endpoint so prometheus can scrape it
+                    # Publish a message to NATS
+                    self.publish_message(data)
                 else:
                     # brute_force will throw an error if all the auth flows fail
                     password, username, auth_flow, scraper, cookie = brute_force(copy.deepcopy(self.device))
@@ -88,5 +91,17 @@ class DeviceWorker(threading.Thread):
         scraper_fn = scraper_registry.get(scraper)
         data = scraper_fn(self.device)
         return data
+
+    def publish_message(self, data):
+        for index, count in enumerate(data):
+            msg = TelemetryMessage(
+                    timestamp=int(time.time()),
+                    source_mac=self.device['mac'],
+                    source_ip=self.device['ip'],
+                    value=count,
+                    data_field_index=index
+                    )
+            msg_as_bytes = msg.to_bytes()
+            self.publish(msg_as_bytes)
 
 
