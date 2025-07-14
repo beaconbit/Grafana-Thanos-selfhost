@@ -1,7 +1,5 @@
 from sqlalchemy import Column, String, Integer, Boolean, Text, BigInteger
-from sqlalchemy.ext.declarative import declarative_base
-
-Base = declarative_base()
+from db.model.base import Base
 
 class Device(Base):
     __tablename__ = 'devices'

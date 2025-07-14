@@ -1,7 +1,7 @@
 # global/device_registry.py
 
-from master.db_session import SessionLocal
-from master.device_repository import DeviceRepository
+from db.utils.db_session import SessionLocal
+from db.repository.device_repository import DeviceRepository
 import threading
 from utils.logging import setup_logger
 from typing import Optional

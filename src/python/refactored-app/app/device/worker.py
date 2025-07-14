@@ -6,6 +6,8 @@ import copy
 from device.utils.auth_flow_registry import auth_flow_registry
 from device.utils.scraper_registry import scraper_registry
 from device.utils.brute_force import brute_force
+from db.utils.db_session import SessionLocal  # your original session factory
+from db.repository.message_info_config_repository import MessageInfoConfigRepository
 from utils.logging import setup_logger
 from utils.message import TelemetryMessage
 from config import load_config
@@ -22,8 +24,11 @@ class DeviceWorker(threading.Thread):
         self.publish = publish
         self.daemon = True
         self.running = True
+        self.config_repo = None
 
     def run(self):
+        session = SessionLocal()
+        self.config_repo = MessageInfoConfigRepository(session)
         mac = self.device.get("mac", "unknown")
         logger.info(f"Starting worker thread for device {mac}")
         while self.running:
@@ -63,7 +68,8 @@ class DeviceWorker(threading.Thread):
                 self.device['failures'] += 1
                 logger.error(f"Incrementing device failure count {self.device.get('failures')}")
 
-            time.sleep(5)  # simulate periodic work
+            time.sleep(5)  # TODO replace with interval from config
+        session.close() # clean up
         logger.debug(f"Thread stopping for device {mac}")
 
     def stop(self):
@@ -93,15 +99,36 @@ class DeviceWorker(threading.Thread):
         return data
 
     def publish_message(self, data):
+        shared_timestamp = int(time.time())
+        mac = self.device.get("mac")
+        ip = self.device.get("ip")
         for index, count in enumerate(data):
-            msg = TelemetryMessage(
-                    timestamp=int(time.time()),
-                    source_mac=self.device['mac'],
-                    source_ip=self.device['ip'],
-                    value=count,
-                    data_field_index=index
-                    )
-            msg_as_bytes = msg.to_bytes()
-            self.publish(msg_as_bytes)
-
-
+            already_published = False
+            try:
+                record = self.config_repo.get_by_mac_and_index(mac, index)
+                msg = TelemetryMessage(
+                        timestamp=shared_timestamp,
+                        source_mac=mac,
+                        source_ip=ip,
+                        source_name=record.source_name,
+                        zone=record.zone,
+                        machine=record.machine,
+                        machine_stage=record.machine_stage,
+                        value=count,
+                        data_field_index=index
+                        )
+                msg_as_bytes = msg.to_bytes()
+                self.publish(msg_as_bytes)
+                already_published = True
+            except Exception as e:
+                logger.error(f"Could not fetch data from message_info_config, publishing raw data instead")
+            if not already_published:
+                msg = TelemetryMessage(
+                        timestamp=shared_timestamp,
+                        source_mac=mac,
+                        source_ip=ip,
+                        value=count,
+                        data_field_index=index
+                        )
+                msg_as_bytes = msg.to_bytes()
+                self.publish(msg_as_bytes)

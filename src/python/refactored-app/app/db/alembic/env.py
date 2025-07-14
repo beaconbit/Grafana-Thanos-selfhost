@@ -6,7 +6,9 @@ from logging.config import fileConfig
 from sqlalchemy import engine_from_config
 from sqlalchemy import pool
 
-from db.model.device import Base
+from db.model import device
+from db.model import message_info_config
+from db.model.base import Base
 from alembic import context
 
 
